@@ -1,0 +1,29 @@
+
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  border-radius: 12px;
+  padding: 20px 24px 24px;
+  margin-top: 25px;
+  border: 1px solid #121212;
+}
+
+.infoTitle {
+  color: #fff;
+  font: 500 18px/2 Inter, sans-serif;
+  margin-bottom: 16px;
+}
+
+.infoContent {
+  color: rgba(242, 242, 242, 0.7);
+  font: 400 16px/28px Inter, sans-serif;
+}
+
+.infoIcon {
+    width: 28px;
+    height: 28px;
+    align-self: flex-start;
+    margin-top: 21px;
+  }

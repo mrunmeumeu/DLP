@@ -1,0 +1,62 @@
+.userProfile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 464px;
+    padding: 0 16px;
+    font-family: Inter, sans-serif;
+  }
+  
+  .userInfo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    object-fit: cover;
+  }
+  
+  .userDetails {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .userName {
+    color: #fff;
+    font-size: 16px;
+    line-height: 2;
+    font-weight: 400;
+  }
+  
+  .viewProfileButton {
+    background: none;
+    border: none;
+    color: #bcc1ca;
+    font-size: 14px;
+    line-height: 2;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .settingsButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .settingsButton img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  @media (max-width: 991px) {
+    .userProfile {
+      margin-top: 40px;
+    }
+  }

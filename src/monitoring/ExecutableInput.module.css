@@ -1,0 +1,26 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .inputLabel {
+    color: #fff;
+    font: 400 20px Archivo, sans-serif;
+    margin-bottom: 22px;
+  }
+  
+  .input {
+    border-radius: 12px;
+    background-color: #000;
+    color: #909590;
+    padding: 4px 16px;
+    font: 400 16px/2 Inter, sans-serif;
+    border: 1px solid #000;
+  }
+  
+  @media (max-width: 991px) {
+    .input {
+      padding-right: 20px;
+    }
+  }

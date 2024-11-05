@@ -1,0 +1,35 @@
+.usageCounterCard {
+  background-color: #1f1f2e; /* Dark background */
+  padding: 20px;
+  border-radius: 12px;       /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  text-align: center;        /* Center the text */
+  max-width: 300px;          /* Control the card width */
+  margin: 20px auto;         /* Center the card horizontally */
+}
+
+.usageTitle {
+  font-size: 18px;           /* Title font size */
+  color: #ffffff;            /* White text */
+  margin-bottom: 10px;
+}
+
+.usageCount {
+  font-size: 36px;           /* Larger font size for the count */
+  color: #00c853;            /* Green color for the count */
+  font-weight: 700;          /* Bold text */
+}
+
+@media (max-width: 991px) {
+  .usageCounterCard {
+    max-width: 100%;         /* Make it responsive */
+  }
+
+  .usageTitle {
+    font-size: 16px;
+  }
+
+  .usageCount {
+    font-size: 32px;
+  }
+}

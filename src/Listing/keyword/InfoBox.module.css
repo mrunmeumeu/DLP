@@ -1,0 +1,43 @@
+.infoBox {
+    display: flex;
+    margin-top: 25px;
+    width: 100%;
+    font: 500 18px Inter, sans-serif;
+    border-radius: 12px;
+    background-color: #000;
+    overflow: hidden;
+    padding: 20px 10px 24px 24px;
+    border: 1px solid #121212;
+  }
+  
+  .infoContent {
+    flex-grow: 1;
+    padding-right: 16px;
+  }
+  
+  .infoTitle {
+    color: #fff;
+    line-height: 2;
+    margin: 0 0 16px;
+  }
+  
+  .infoDescription {
+    color: rgba(242, 242, 242, 0.7);
+    line-height: 28px;
+    margin: 0;
+  }
+  
+  .infoIcon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    align-self: flex-start;
+    margin-top: 21px;
+  }
+  
+  @media (max-width: 991px) {
+    .infoBox {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }

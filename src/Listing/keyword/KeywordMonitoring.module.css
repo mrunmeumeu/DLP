@@ -1,0 +1,297 @@
+/* General styling for the homepage */
+.homepage {
+    background-color: #000;
+    box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 920px;
+    width: 100%;
+    padding-bottom: 14px;
+  }
+  
+  .backgroundImage {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .header {
+    position: relative;
+    background-color: #171a1f;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 42px;
+    font-family: Archivo, sans-serif;
+    color: #fff;
+    font-weight: 800;
+  }
+  
+  .title {
+    font-size: 36px;
+    line-height: 1;
+    margin: auto 0;
+  }
+  
+  .brandName {
+    font-size: 28px;
+    padding: 7px 35px 7px 70px;
+  }
+  
+  .contentWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1059px;
+    margin: 16px 0 0 22px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .sidebar {
+    width: 25%;
+  }
+  
+  .mainSection {
+    width: 75%;
+    border-radius: 12px;
+    background-color: #262a33;
+    padding: 24px 31px;
+  }
+  
+  .sectionTitle {
+    color: #fff;
+    font: 700 30px/1 Archivo, sans-serif;
+  }
+  
+  .toggleWrapper {
+    border-radius: 25px;
+    background-color: #000;
+    display: flex;
+    margin-top: 33px;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 14px 17px;
+  }
+  
+  .toggleLabel {
+    color: #fff;
+    font: 400 20px Archivo, sans-serif;
+  }
+  
+  .toggle {
+  position: relative;
+  width: 60px;  /* Adjust width for a proper size */
+  height: 30px;  /* Adjust height for a proper size */
+  background-color: #ccc;  /* Default background when toggle is off */
+  border-radius: 50px;  /* Rounded corners for the toggle background */
+  cursor: pointer;
+  transition: background-color 0.3s ease;  /* Smooth transition for background */
+  }
+  
+  .toggleKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease
+  }
+  .active {
+    background-color: #4CAF50;  /* Green background for active state */
+    transform: translateX(30px);  /* Move the knob to the right */
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 991px) {
+    .header {
+      padding: 0 20px;
+    }
+  
+    .contentWrapper {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+  
+    .sidebar,
+    .mainSection {
+      width: 100%;
+    }
+  
+    .mainSection {
+      margin-top: 19px;
+      padding: 24px 20px;
+    }
+  
+    .toggleWrapper {
+      flex-wrap: wrap;
+    }
+  }
+  
+  /* Table Styling */
+/* General styling for the table container */
+.tableContainer {
+  margin-top: 20px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.clientsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #171a1f; /* Dark background for the table */
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12); /* Subtle shadow */
+}
+
+.clientsTable th {
+  background-color: #262a33;
+  color: #fff;
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.clientsTable tr {
+  border-bottom: 1px solid #3a3f47;
+}
+
+.clientsTable tr:hover {
+  background-color: #2e3240;
+}
+
+.clientsTable td {
+  padding: 12px 15px;
+  font-size: 16px;
+  color: #ddd;
+}
+
+.clientsTable .ipColumn {
+  color: #00c853; /* Green color for the IP address */
+}
+
+.clientsTable .nameColumn {
+  color: #fff; /* White color for the client name */
+}
+
+/* Circular checkbox styling */
+/* Heart-shaped checkbox styling */
+.heartCheckbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.heartCheckbox input[type="checkbox"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+}
+
+.heartCheckbox span {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 18px;
+  background-color: #262a33;
+  transform: rotate(-45deg);
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.heartCheckbox span:before,
+.heartCheckbox span:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #262a33;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.heartCheckbox span:before {
+  top: -10px;
+  left: 0;
+}
+
+.heartCheckbox span:after {
+  left: 10px;
+  top: 0;
+}
+
+/* Heart color change on selection */
+.heartCheckbox input[type="checkbox"]:checked + span {
+  background-color: #e74c3c;
+}
+
+.heartCheckbox input[type="checkbox"]:checked + span:before,
+.heartCheckbox input[type="checkbox"]:checked + span:after {
+  background-color: #e74c3c;
+}
+
+
+/* Toggle Wrapper */
+.toggleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.toggleLabel {
+  color: #fff;
+  font-size: 18px;
+}
+
+/* Toggle Button */
+.toggle {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle.active {
+  background-color: #00c853;
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  transition: left 0.2s;
+}
+
+.toggle.active .toggleKnob {
+  left: 33px; /* Shift the knob to the right when active */
+}

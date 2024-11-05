@@ -1,0 +1,219 @@
+.homepage {
+    background-color: #000;
+    box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 920px;
+    width: 100%;
+    padding-bottom: 14px;
+  }
+  
+  .backgroundImage {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .header {
+    position: relative;
+    background-color: #171a1f;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 42px;
+    font-family: Archivo, sans-serif;
+    color: #fff;
+    font-weight: 800;
+  }
+  
+  .title {
+    font-size: 36px;
+    line-height: 1;
+    margin: auto 0;
+  }
+  
+  .brandName {
+    font-size: 28px;
+    padding: 7px 35px 7px 70px;
+  }
+  
+  .contentWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1059px;
+    margin: 18px 0 0 22px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .sidebar {
+    width: 25%;
+  }
+  
+  .monitoringSection {
+    width: 75%;
+    border-radius: 12px;
+    background-color: #262a33;
+    padding: 24px 31px;
+  }
+  
+  .sectionTitle {
+    color: #fff;
+    font: 700 30px/1 Archivo, sans-serif;
+    margin-bottom: 33px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  
+  @media (max-width: 991px) {
+    .mainContent {
+      max-width: 100%;
+    }
+  
+    .header {
+      padding: 0 20px;
+    }
+  
+    .brandName {
+      white-space: normal;
+    }
+  
+    .contentWrapper {
+      max-width: 100%;
+      flex-direction: column;
+    }
+  
+    .sidebar,
+    .monitoringSection {
+      width: 100%;
+    }
+  
+    .monitoringSection {
+      padding: 24px 20px;
+    }
+  
+    .inputGroup {
+      max-width: 100%;
+    }
+  }
+  .homepage {
+    background-color: #000;
+    box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+    padding-bottom: 14px;
+  }
+  
+  .backgroundImage {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .header {
+    position: relative;
+    background-color: #171a1f;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px 42px;
+    font-family: Archivo, sans-serif;
+    color: #fff;
+    font-weight: 800;
+  }
+  
+  .title {
+    font-size: 36px;
+    line-height: 1;
+    margin: 0;
+  }
+  
+  .brandName {
+    font-size: 28px;
+    padding: 7px 35px 7px 70px;
+  }
+  
+  .contentWrapper {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    padding: 18px 22px;
+    flex-grow: 1;
+  }
+  
+  .sidebar {
+    width: 25%;
+    min-width: 250px;
+  }
+  
+  .monitoringSection {
+    flex-grow: 1;
+    border-radius: 12px;
+    background-color: #262a33;
+    padding: 24px 31px;
+  }
+  
+  .sectionTitle {
+    color: #fff;
+    font: 700 30px/1 Archivo, sans-serif;
+    margin-bottom: 33px;
+  }
+  
+  @media (max-width: 991px) {
+    .header {
+      padding: 20px;
+    }
+  
+    .brandName {
+      white-space: normal;
+      padding: 7px 0;
+    }
+  
+    .contentWrapper {
+      flex-direction: column;
+      padding: 18px;
+    }
+  
+    .sidebar,
+    .monitoringSection {
+      width: 100%;
+    }
+  
+    .monitoringSection {
+      padding: 24px 20px;
+    }
+  }

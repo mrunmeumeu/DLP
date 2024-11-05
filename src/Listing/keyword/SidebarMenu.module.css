@@ -1,0 +1,36 @@
+.sidebarMenu {
+    background-color: #262a33;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 8px;
+  }
+  
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: #909590;
+    font: 400 16px/2 Inter, sans-serif;
+    text-decoration: none;
+  }
+  
+  .menuItem.active {
+    background-color: #121212;
+    color: #7e7adc;
+    font-weight: 700;
+  }
+  
+  .menuIcon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 991px) {
+    .sidebarMenu {
+      margin-top: 17px;
+    }
+  }

@@ -1,0 +1,334 @@
+.builderComponent {
+    max-width: none !important;
+  }
+  
+  .backgroundImage {
+    position: fixed; /* Fixed positioning to keep it as a background */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    object-fit: cover; /* Cover the full screen */
+    z-index: -1; /* Place it behind other elements */
+  }
+  
+  .mainContainer {
+    position: relative; /* Ensure content stays above the background */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    min-height: 100vh; /* Ensure it stretches the full height */
+    width: 100%;
+    padding-bottom: 14px;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 991px) {
+    .mainContainer {
+      max-width: 100%;
+      min-height: 100vh;
+    }
+  }
+  
+  .header {
+    position: relative;
+    background-color: #171a1f;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    font-family: Archivo, sans-serif;
+    color: #fff;
+    font-weight: 800;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0px 42px;
+  }
+  
+  .logoText {
+    font-size: 36px;
+    line-height: 1;
+    margin: auto 0;
+  }
+  
+  .brandName {
+    background-color: transparent;
+    font-size: 28px;
+    white-space: nowrap;
+    padding: 7px 35px 7px 70px;
+  }
+  
+  @media (max-width: 991px) {
+    .brandName {
+      white-space: initial;
+    }
+  }
+  
+  .contentWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    margin: 18px 0 0 22px;
+  }
+  
+  .columnLayout {
+    display: flex;
+    gap: 20px;
+  }
+  
+  @media (max-width: 991px) {
+    .columnLayout {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  
+  /* Sidebar Styles */
+  .sidebarContainer {
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3a3f47, #1f2227); /* Lighter gradient */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebarMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #2e3240; /* Darker background for each item */
+    border-radius: 10px;
+    padding: 12px 18px;
+    color: #9095a0;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menuItem:hover {
+    background-color: #3c404a; /* Slightly lighter on hover */
+  }
+  
+  .activeMenuItem {
+    background-color: #171a1f;
+    color: #715fc3;
+    font-weight: 700;
+  }
+  
+  .menuIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .userProfile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    border-top: 1px solid #3a3f47;
+    margin-top: 20px;
+  }
+  
+  .profileInfo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .profileImage {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+  
+  .profileDetails {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+  }
+  
+  .userName {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .profileLink {
+    font-size: 14px;
+    color: #b0b3b8;
+    cursor: pointer;
+  }
+  
+  .settingsIcon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+   
+  /* Main Content Styles */
+  .mainColumn {
+    width: 57%;
+  }
+  
+  .mainContent {
+    border-radius: 12px;
+    background-color: #262a33;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 31px;
+  }
+  
+  .contentTitle {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  /* Toggle List */
+  .toggleList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .toggleItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #171a1f;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  /* Toggle Switch Styles */
+  .toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+  }
+  
+  .toggleSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #9095a0;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 2.5px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #00c853;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  /* Side Column Styles (for Safety Percentage, Device Health, Active Features) */
+  .sideColumn {
+    width: 24%;
+  }
+  
+  .sideContent {
+    border-radius: 12px;
+    background-color: rgba(38, 42, 51, 0.8);
+    padding: 24px;
+    margin-top: 13px;
+  }
+  
+  /* Chart and Legend Styles */
+  .pieChart {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 13px;
+    align-items: center;
+  }
+  
+  .chartTitle {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .chartImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .legendItems {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .legendItem {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .legendColor {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  /* Example colors for the legend */
+  .legendColorA {
+    background-color: #636ae8;
+  }
+  
+  .legendColorB {
+    background-color: #e8618c;
+  }
+  
+  .legendColorC {
+    background-color: #22ccb2;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 991px) {
+    .mainContainer, .sidebarContainer, .mainColumn, .sideColumn, .sidebarMenu, .contentFrame, .sideContent, .legendItems, .pieChart {
+      padding: 0 20px;
+      width: 100%;
+    }
+  }
+  

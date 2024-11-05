@@ -1,0 +1,38 @@
+.dashboardSection {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+  
+  .sectionTitle,
+  .subsectionTitle {
+    border-radius: 12px;
+    background-color: #262a33;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    color: #fff;
+    padding: 11px 16px;
+    font: 700 30px/1 Archivo, sans-serif;
+  }
+  
+  .managedDevices {
+    border-radius: 12px;
+    background-color: #262a33;
+    box-shadow: 0 0 2px rgba(23, 26, 31, 0.12);
+    padding: 24px;
+  }
+  
+  @media (max-width: 991px) {
+    .dashboardSection {
+      max-width: 100%;
+      margin-top: 19px;
+    }
+  
+    .sectionTitle,
+    .subsectionTitle {
+      padding-right: 20px;
+    }
+  
+    .managedDevices {
+      padding: 24px 20px;
+    }
+  }

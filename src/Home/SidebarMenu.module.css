@@ -1,0 +1,43 @@
+.sidebarMenu {
+    border-radius: 12px;
+    background-color: rgba(38, 42, 51, 0.8);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 16px;
+  }
+  
+  .menuItem {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 16px;
+    color: #909590;
+    font: 400 16px/2 Inter, sans-serif;
+  }
+  
+  .menuItem.active {
+    background-color: #000;
+    border-radius: 12px;
+    color: #878ced;
+    font-weight: 700;
+  }
+  
+  .icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  
+  .secondaryIcon {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 991px) {
+    .sidebarMenu {
+      margin-top: 19px;
+    }
+  }

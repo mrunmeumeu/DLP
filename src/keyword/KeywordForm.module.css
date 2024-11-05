@@ -1,0 +1,74 @@
+.keywordForm {
+  display: flex;
+  margin-top: 18px;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.inputSection,
+.selectedSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.inputLabel {
+  color: #fff;
+  font: 20px Archivo, sans-serif;
+  margin-bottom: 10px;
+}
+
+.keywordInput,
+.selectDropdown {
+    border-radius: 12px;
+    background-color: #000;
+    color: #909590;
+    padding: 8px 16px;
+    font: 16px/2 Inter, sans-serif;
+    border: 1px solid #303030;
+}
+
+.selectDropdown {
+    appearance: none;
+    padding-right: 40px; /* Space for dropdown arrow */
+    background-image: url('https://cdn.builder.io/api/v1/image/assets/TEMP/7f80e7eae430e68967df2e9859776ff1ff12907a4eb985635ce9acca7de46fd3?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px 16px;
+}
+.addButton,
+.deleteButton {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font: 16px Inter, sans-serif;
+}
+
+.addButton:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.deleteButton {
+  background-color: #ff4d4d; /* Red color for delete button */
+}
+
+.deleteButton:hover {
+  background-color: #ff1a1a;
+}
+
+  
+  @media (max-width: 991px) {
+    .keywordForm {
+      margin-right: 2px;
+    }
+  
+    .keywordInput,
+    .selectedKeywords {
+      padding-right: 20px;
+    }
+  }
