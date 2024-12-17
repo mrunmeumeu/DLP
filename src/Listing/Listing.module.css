@@ -239,15 +239,13 @@
     display: flex;
     flex-direction: column;
     line-height: normal;
-    width: 85%;
+   
+    max-width: 1000px;
+    width: 95%;
     margin-left: 20px;
   }
   
-  @media (max-width: 1050px) {
-    .mainColumn {
-      width: 100%;
-    }
-  }
+
   
   .mainContent {
     border-radius: 12px;
@@ -575,3 +573,4 @@
   color: #9095a0;
   font-size: 14px;
 }
+

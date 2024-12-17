@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';  // Import axios for HTTP requests
+import axios from 'axios'; // Import axios for HTTP requests
 import styles from './VulnerabilityAssessment.module.css';
 
 function MainContent() {
-  const [clients, setClients] = useState([]);  // Store the list of clients
-  const [selectedClients, setSelectedClients] = useState([]);  // Store selected clients
-  const [logFiles, setLogFiles] = useState([]);  // State to store the list of log files
-  const [showLogFiles, setShowLogFiles] = useState(false);  // State to toggle log files view
+  const [clients, setClients] = useState([]); // Store the list of clients
+  const [selectedClients, setSelectedClients] = useState([]); // Store selected clients
+  const [logFiles, setLogFiles] = useState([]); // State to store the list of log files
+  const [showLogFiles, setShowLogFiles] = useState(false); // State to toggle log files view
 
   // Fetch the list of clients from the server
   useEffect(() => {
     const fetchClients = async () => {
       try {
         const response = await axios.get('http://localhost:5000/scan-network');
-        setClients(response.data);  // Set the clients list in state
+        setClients(response.data); // Set the clients list in state
       } catch (error) {
         console.error('Error fetching client data:', error);
       }
@@ -39,7 +39,7 @@ function MainContent() {
 
     try {
       const response = await axios.post('http://localhost:5000/run-vulnerability-scan', {
-        client_ids: selectedClients  // Send selected clients' IPs
+        client_ids: selectedClients // Send selected clients' IPs
       });
       console.log('Scan results:', response.data);
       alert("Vulnerability scan initiated for selected clients.");
@@ -63,10 +63,15 @@ function MainContent() {
 
   return (
     <section className={styles.mainContent}>
-      <h2 className={styles.contentTitle}>Vulnerability Assessment Scan</h2>
+      {/* Title Box */}
+      <div className={styles.titleBox}>
+        <h2 className={styles.contentTitle}>Vulnerability Assessment Scan</h2>
+      </div>
 
       {/* List of clients displayed in a table */}
-      <h3>Select Clients to Run Scan</h3>
+      <div className={styles.clientHeaderBox}>
+        <h3 className={styles.clientTitle}>Select Clients to Run Scan</h3>
+      </div>
       <div className={styles.tableContainer}>
         <table className={styles.clientsTable}>
           <thead>
@@ -81,10 +86,10 @@ function MainContent() {
               <tr key={index}>
                 <td>
                   <label className={styles.circularCheckbox}>
-                    <input 
+                    <input
                       type="checkbox"
                       checked={selectedClients.includes(client.ip)}
-                      onChange={() => handleClientSelection(client.ip)}  // Toggle client selection
+                      onChange={() => handleClientSelection(client.ip)} // Toggle client selection
                     />
                     <span className={styles.circularCheckbox}></span>
                   </label>
@@ -97,29 +102,20 @@ function MainContent() {
         </table>
       </div>
 
-      {/* Button to run vulnerability scan */}
-      <button className={styles.actionButton} onClick={runVulnerabilityScan}>
-        <span className={styles.actionButtonText}>
-          Run Vulnerability Assessment Scan
-        </span>
-        <img 
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/d627d89056afc0eaeb2461e7db3372695655ea09432e1edfe1f2962a945510c3?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1" 
-          alt="Run scan" 
-          className={styles.actionButtonIcon}
-        />
-      </button>
-      
-      {/* Button to toggle viewing log files */}
-      <button className={styles.actionButton} onClick={fetchLogFiles}>
-        <span className={styles.actionButtonText}>
-          {showLogFiles ? "Hide Logs" : "View Logs"}
-        </span>
-        <img 
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/f4c651baed9641fe62c04b173c0481dda7ec45da964fc7c563dfc10ecdd64516?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1" 
-          alt="View logs" 
-          className={styles.actionButtonIcon}
-        />
-      </button>
+      {/* Buttons */}
+      <div className={styles.buttonContainer}>
+        <button className={styles.actionButton} onClick={runVulnerabilityScan}>
+          <span className={styles.actionButtonText}>
+            Run Vulnerability Assessment Scan
+          </span>
+        </button>
+
+        <button className={styles.actionButton} onClick={fetchLogFiles}>
+          <span className={styles.actionButtonText}>
+            {showLogFiles ? "Hide Logs" : "View Logs"}
+          </span>
+        </button>
+      </div>
 
       {/* If log files are available, display them */}
       {showLogFiles && logFiles.length > 0 && (

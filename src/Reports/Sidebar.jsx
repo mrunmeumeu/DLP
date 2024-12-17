@@ -13,7 +13,7 @@ const menuItems = [
     
     { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/44adde0303a779cb69ed6d1f1b26c6e2656ad60fa84cf55fba32d12c9da09195?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1",link: "/reports", text: "Reports and Analysis",active: true },
     { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/ce875c513134a3c308932cf55de7605cb870f261e48ea6363eb424c98e610025?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1", link: "/ss-blocking", text: "Screenshot Blocking" },
-    { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d714ee8b74cdf9532d5199fc62400791caf22429822f09749c954b8b2b35fcf4?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1", text: "Policies" },
+    { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d714ee8b74cdf9532d5199fc62400791caf22429822f09749c954b8b2b35fcf4?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1",link: "/analysis", text: "Audit",active: false  },
     { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/ede9ada030466c0e36b97103edd801b3d3f681d7798742dec6d3a7b5c133ce9c?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1", text: "White/Blacklist" },
     { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/3d07a0a8e8c8aa92ef2744f1b291057188aba041ae266cbd3c91bbb01bf6a074?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1", text: "System Maintainence" },
     { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/79db2bfb16374d3d9fa3dbf4b4870efe78bac4951707021270a63be1f1126405?placeholderIfAbsent=true&apiKey=6780ef7663fb420989788dbe5af024d1", text: "Support" }

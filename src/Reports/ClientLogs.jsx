@@ -43,7 +43,7 @@ function ClientLogs() {
       return;
     }
 
-    clearLogs(); // Clear previous logs
+    clearLogs();
     setLoading(true);
     setError(null);
 
@@ -83,7 +83,7 @@ function ClientLogs() {
       return;
     }
 
-    clearLogs(); // Clear previous logs
+    clearLogs();
     setLoading(true);
     setError(null);
 
@@ -108,7 +108,7 @@ function ClientLogs() {
       return;
     }
 
-    clearLogs(); // Clear previous logs
+    clearLogs();
     setLoading(true);
     setError(null);
 
@@ -133,7 +133,7 @@ function ClientLogs() {
       return;
     }
 
-    clearLogs(); // Clear previous logs
+    clearLogs();
     setLoading(true);
     setError(null);
 
@@ -156,7 +156,12 @@ function ClientLogs() {
     <section className={styles.mainContent}>
       <h2 className={styles.contentTitle}>Client Logs</h2>
 
-      <h3>Select a Client to Request Logs</h3>
+      {/* Centered Background Box for "Select Client" */}
+      <div className={styles.selectClientHeader}>
+  <h3 className={styles.selectClientHeaderText}>Select a Client to Request Logs</h3>
+</div>
+
+
       <div className={styles.tableContainer}>
         <table className={styles.clientsTable}>
           <thead>

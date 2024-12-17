@@ -48,6 +48,7 @@ function Listing() {
             <div className={styles.mainColumn}>
               {/* Pass clientDetails and IP as props to MainContent */}
               <ClientStatus  />
+              
             </div>
             <div>
               

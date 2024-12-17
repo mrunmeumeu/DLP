@@ -1,0 +1,68 @@
+.usersTableContainer {
+  margin-top: 20px;
+  background-color: rgba(38, 42, 51, 0.9);
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usersTable th,
+.usersTable td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #34495e;
+  color: #bdc3c7;
+}
+
+.usersTable th {
+  background-color: #34495e;
+  font-weight: bold;
+}
+
+.usersTable tr:nth-child(even) {
+  background-color: #2c3e50;
+}
+
+.usersTable tr:hover {
+  background-color: #1abc9c;
+  color: #ecf0f1;
+}
+
+.analyseButton {
+  background-color: #3498db;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.analyseButton:hover {
+  background-color: #2980b9;
+}
+
+.usersTable td.violationCount {
+  color: #e74c3c !important; /* Red color for violation counts */
+  font-weight: bold;
+}
+.auditTitleBox {
+  background-color: rgba(38, 42, 51, 0.9); /* Match table background for consistency */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auditTitle {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ecf0f1; /* White color for the text */
+  margin: 0;
+}

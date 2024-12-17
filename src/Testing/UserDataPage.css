@@ -1,0 +1,123 @@
+/* Main container styling */
+.userDataPage {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Page title styling */
+  .userDataPage h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #444;
+  }
+  
+  /* Dropdown container styling */
+  .dropdownContainer {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .dropdownContainer label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .dropdownContainer select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+    transition: 0.3s;
+  }
+  
+  .dropdownContainer select:hover {
+    border-color: #007bff;
+  }
+  
+  .dropdownContainer select:focus {
+    border-color: #0056b3;
+    outline: none;
+  }
+  
+  /* User data container styling */
+  .userDataContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .userDataContainer h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .userDataContainer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .userDataContainer li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .userDataContainer pre {
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #333;
+    overflow-x: auto;
+  }
+  
+  /* Message styling for when no user or category is selected */
+  .userDataContainer p {
+    font-size: 16px;
+    text-align: center;
+    color: #666;
+    margin: 20px 0;
+  }
+  
+  /* Styling for larger screens */
+  @media (min-width: 768px) {
+    .userDataPage {
+      padding: 40px;
+    }
+  
+    .dropdownContainer {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    .dropdownContainer label {
+      margin: 0;
+    }
+  
+    .userDataContainer {
+      max-width: 800px;
+    }
+  }
+  

@@ -25,9 +25,7 @@ const Screenshot = () => {
             <div className={styles.mainColumn}>
               <MainContent />
             </div>
-            <div className={styles.sideColumn}>
-              {/* <SideContent /> */}
-            </div>
+           
           </div>
         </div>
       </div>

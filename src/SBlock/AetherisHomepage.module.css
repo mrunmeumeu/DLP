@@ -109,7 +109,7 @@
     display: flex;
     flex-direction: column;
     line-height: normal;
-    width: 25%;
+    width: 300px;
     margin-left: 0;
   }
   
@@ -265,8 +265,19 @@
     overflow: hidden;
     font-family: Archivo, sans-serif;
     margin: 0 auto;
-    padding: 24px 31px 468px;
+    padding: 24px 31px;
   }
+  .headerBox {
+    display: flex;
+    justify-content: space-between; /* Ensure the title is on the left and toggle is on the right */
+    align-items: center; /* Vertically align items */
+    background-color: #484f5f; /* Dark background for the box */
+    border-radius: 12px; /* Rounded corners */
+    padding: 16px 24px; /* Padding for spacing inside the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for the box */
+    margin-bottom: 20px; /* Space below the box */
+  }
+
   
   @media (max-width: 991px) {
     .mainContent {
@@ -277,11 +288,10 @@
   }
   
   .contentTitle {
-    color: #fff;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1;
-    align-self: start;
+    color: #fff; /* White text */
+    font-size: 24px; /* Font size for the title */
+    font-weight: 700; /* Bold text */
+    margin: 0; /* Remove default margin */
   }
   
   .contentFrame {
@@ -394,11 +404,11 @@
   }
   
   .sideColumn {
-    display: flex;
+    display: block;
     flex-direction: column;
     line-height: normal;
-    width: 24%;
-    margin-left: 20px;
+    width: 25%;
+    margin-left: 0;
   }
   
   @media (max-width: 991px) {
@@ -407,6 +417,16 @@
     }
   }
   
+  .sidebarColumn {
+    
+  }
+  
+  @media (max-width: 991px) {
+    .sidebarColumn {
+      width: 100%;
+    }
+  }
+
   .sideContent {
     border-radius: 12px;
     background-color: rgba(38, 42, 51, 0.8);
@@ -504,7 +524,10 @@
   .legendColorC {
     background-color: #22ccb2;
   }
-
+  .toggleContainer {
+    margin-left: auto; /* Push the toggle to the far right */
+  }
+  
   /* Toggle Switch CSS */
 .toggleSwitch {
   position: relative;
@@ -519,7 +542,7 @@
   height: 0;
 }
 
-.slider {
+.toggleSwitch .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -531,9 +554,9 @@
   border-radius: 34px;
 }
 
-.slider:before {
+.toggleSwitch .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
@@ -543,11 +566,11 @@
   border-radius: 50%;
 }
 
-input:checked + .slider {
+.toggleSwitch input:checked + .slider {
   background-color: #2196F3;
 }
 
-input:checked + .slider:before {
+.toggleSwitch input:checked + .slider:before {
   transform: translateX(26px);
 }
 /* Styling the table */
@@ -595,6 +618,25 @@ input:checked + .slider:before {
 .clientsTable .nameColumn {
   color: #fff; /* White color for the client name */
 }
+
+.clientHeaderBox {
+  display: flex;
+  justify-content: center; /* Center align the header */
+  align-items: center;
+  background-color: #484f5f; /* Dark background for the box */
+  border-radius: 12px; /* Rounded corners */
+  padding: 16px 24px; /* Padding for spacing inside the box */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for the box */
+  margin: 20px 0; /* Space above and below the box */
+}
+
+.clientTitle {
+  color: #fff; /* White text */
+  font-size: 20px; /* Font size for the title */
+  font-weight: 600; /* Slightly bold text */
+  margin: 0; /* Remove default margin */
+}
+
 
 /* Circular checkbox styling */
 .circularCheckbox {
