@@ -1,6 +1,6 @@
 # AetherisHomepageP Component
 
-**File Path:** [`src/Listing/USB/AetherisHomepage.js`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/USB/AetherisHomepage.jsx)
+**File Path:** [`src/Listing/USB/AetherisHomepage.js`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/USB/AetherisHomepage.jsx )
 
 ## **Purpose**
 The `AetherisHomepageP` component is a client-specific page for managing USB monitoring features. It allows the admin to enable or disable USB/Port Blocking for a particular client identified by their IP address.
