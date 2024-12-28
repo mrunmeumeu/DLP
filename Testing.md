@@ -1,6 +1,6 @@
 # Testing Component
 
-**File Path:** [`src/Listing/Testing.js`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/Testing.js)
+**File Path:** [`src/Testing/Testing.jsx`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/Testing.jsx)
 
 ## **Purpose**
 The `Testing` component serves as the main dashboard for the admin to monitor and analyze the security posture of the connected devices. It provides:
@@ -11,28 +11,28 @@ The `Testing` component serves as the main dashboard for the admin to monitor an
 ---
 
 ## **Imported Dependencies**
-Below are the imported components and their purposes:
+Below are the imported components and their purposes, all located within the `Testing` directory:
 
-1. **[`Sidebar`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/Sidebar.js)**
+1. **[`Sidebar`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/Sidebar.jsx)**
    - **Purpose:** Displays the navigation menu for switching between pages.
 
-2. **[`LineGraph`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/LineGraph.js)**
+2. **[`LineGraph`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/LineGraph.jsx)**
    - **Purpose:** Visualizes cumulative policy violations over time using Firebase logs.
 
-3. **[`BarChart`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/UsbChart.js)**
+3. **[`BarChart`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/UsbChart.jsx)**
    - **Purpose:** Displays the proportion of USBs blocked and not blocked.
 
-4. **[`SafetyPercentage`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/SafetyPercentage.js)**
+4. **[`SafetyPercentage`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/SafetyPercentage.jsx)**
    - **Purpose:** Visualizes the percentage of connected clients.
 
-5. **[`SystemStatus`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/Stats.js)**
+5. **[`SystemStatus`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/Stats.jsx)**
    - **Purpose:** Shows real-time system performance metrics (CPU and RAM usage).
 
-6. **[`Firebase`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/firebase.js)**
+6. **[`Firebase`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/firebase.js)**
    - **Purpose:** Initializes Firebase and provides database access.
 
 7. **CSS Modules**
-   - **File:** [`Listing.module.css`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Listing/Listing.module.css)
+   - **File:** [`Testing.module.css`](https://github.com/mrunmeumeu/DLP/blob/ADMIN_FRONTEND/src/Testing/Testing.module.css)
    - **Purpose:** Provides styles for the `Testing` component.
 
 ---
