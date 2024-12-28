@@ -51,7 +51,7 @@ The component interacts with Firebase to:
    - **Structure:**
      ```json
      {
-       "device_id": {
+       "log1": {
          "device_name": "Device1",
          "assessment": {
            "port1": { "Port": 22, "Status": "Open" },
