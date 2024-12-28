@@ -4,7 +4,7 @@ Raksha 1 is a cutting-edge cybersecurity application designed to provide robust 
 
 Key Features:
 USB Blocking: Control and restrict USB device access to prevent unauthorized data transfer.
-Vulnerability Assessment (VA) Scans: Identify and mitigate system vulnerabilities through in-depth scanning.
+Vulnerability Assessment (VA) Scans: Identify and mitigate system port vulnerabilities through in-depth scanning.
 Clipboard Monitoring: Safeguard sensitive data by tracking and clearing suspicious clipboard activity.
 File Encryption: Secure critical files with advanced encryption mechanisms.
 Executable Monitoring: Monitor and restrict unauthorized or malicious executable files.
