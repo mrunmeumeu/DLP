@@ -125,11 +125,5 @@ The `KeywordMonitoring` component interacts with the backend server (Flask API) 
 
 ---
 
-## **Future Enhancements**
-1. Display real-time monitoring status for each client.
-2. Add keyword search and filtering options.
-3. Provide an audit trail for clipboard monitoring activities.
-
----
 
 This documentation provides a detailed guide to understanding the **KeywordMonitoring** component, including its features, structure, and backend communication.
