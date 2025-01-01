@@ -69,7 +69,7 @@ This guide will walk you through creating a Firebase web app, retrieving its SDK
 
 ---
 
-## 6. **Configure Database Rules (Optional)**
+## 6. **Configure Database Rules (Compulsary)**
    - In the Realtime Database settings, go to the **Rules** tab.
    - Modify the rules as below:
        ```json
@@ -92,44 +92,9 @@ This guide will walk you through creating a Firebase web app, retrieving its SDK
 
 ---
 
-## 7. **Integrate Firebase Realtime Database in Your Web App**
-   - Install the Firebase library if not already done:
-     ```bash
-     npm install firebase
-     ```
-   - Import and initialize Firebase Realtime Database in your project:
-     ```javascript
-     import { initializeApp } from "firebase/app";
-     import { getDatabase, ref, set } from "firebase/database";
 
-     // Your web app's Firebase configuration
-     const firebaseConfig = {
-       apiKey: "YOUR_API_KEY",
-       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-       projectId: "YOUR_PROJECT_ID",
-       storageBucket: "YOUR_PROJECT_ID.appspot.com",
-       messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-       appId: "YOUR_APP_ID",
-       databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-     };
 
-     // Initialize Firebase
-     const app = initializeApp(firebaseConfig);
-
-     // Initialize Realtime Database
-     const database = getDatabase(app);
-
-     // Example: Write data to the database
-     set(ref(database, 'users/1'), {
-       username: "JohnDoe",
-       email: "johndoe@example.com",
-       profile_picture: "https://example.com/profile.jpg"
-     });
-     ```
-
----
-
-## 8. **Access Your Realtime Database**
+## 7. **Access Your Realtime Database**
    - In your Firebase Console, navigate to **Realtime Database** to view and manage data in real time.
 
 ---
