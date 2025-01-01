@@ -71,12 +71,20 @@ This guide will walk you through creating a Firebase web app, retrieving its SDK
 
 ## 6. **Configure Database Rules (Optional)**
    - In the Realtime Database settings, go to the **Rules** tab.
-   - Modify the rules as per your security requirements. For example:
-     ```json
+   - Modify the rules as below:
+       ```json
      {
        "rules": {
-         ".read": "auth != null",  // Only authenticated users can read
-         ".write": "auth != null" // Only authenticated users can write
+         "fp": {
+           ".read": true,
+           ".write": true
+         },
+         "pdfPasswords": {
+           ".read": true,
+           ".write": true
+         },
+         ".read": true,
+         ".write": false
        }
      }
      ```
