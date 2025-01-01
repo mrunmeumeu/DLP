@@ -34,8 +34,8 @@ This document provides an overview of the routes defined in the `App.js` file, t
    **Description:**  
    Admin page for managing clipboard monitoring. Enables or disables clipboard monitoring across the network.
 
-5. **/client/:ip**  
-   **Component:** [Dashboard](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/Dashboard.md)  
+5. **/client/:ip** 
+   **Component:** [Dashboard](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/Dashboard(client_specific).md)  
    **Full Path:** `./Listing/Dashboard/VulnerabilityAssessment.jsx`  
    **Description:**  
    Displays detailed information about a specific client, including:
@@ -45,19 +45,19 @@ This document provides an overview of the routes defined in the `App.js` file, t
    - Other client-specific details.
 
 6. **/client/:ip/usb-monitoring**  
-   **Component:** [AetherisHomepageP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/AetherisHomepageP.md)  
+   **Component:** [AetherisHomepageP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/AetherisHomepageP(usb_specific).md)  
    **Full Path:** `./Listing/USB/AetherisHomepage.jsx`  
    **Description:**  
    Client-specific page for managing USB monitoring features.
 
 7. **/client/:ip/va-scans**  
-   **Component:** [VulnerabilityAssessmentP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/VulnerabilityAssessmentP.md)  
+   **Component:** [VulnerabilityAssessmentP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/VulnerabilityAssessmentP(va_specific).md)  
    **Full Path:** `./Listing/VA/VulnerabilityAssessment.jsx`  
    **Description:**  
    Client-specific page for managing and viewing the results of vulnerability assessments.
 
 8. **/client/:ip/keyword-management**  
-   **Component:** [KeywordMonitoringP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/KeywordMonitoringP.md)  
+   **Component:** [KeywordMonitoringP](https://github.com/mrunmeumeu/DLP/blob/indepth-documentation/KeywordMonitoringP(keyword_specific).md)  
    **Full Path:** `./Listing/keyword/KeywordMonitoring.jsx`  
    **Description:**  
    Client-specific page for managing clipboard monitoring policies.
