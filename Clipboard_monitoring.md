@@ -51,6 +51,96 @@ def log_event(event_description, detected_word=None):
         log_data['detected_word'] = detected_word
     ref.push(log_data)
 ```
+
 ### Clipboard Monitoring
-- **Clipboard Content Access:** Uses `pyperclip` to access clipboard text and `win32clipboard` for file paths.
--Attempts multiple retries to access clipboard content in case of errors.
+
+#### Clipboard Content Access
+- Uses `pyperclip` to access clipboard text and `win32clipboard` for file paths.
+- Implements retries to handle clipboard access errors.
+
+#### Keyword Detection
+- Reads sensitive keywords from the file: `C:\Program Files\DLP\keywords.txt`.
+- Uses regular expressions to detect keywords in clipboard content or file names:
+
+```python
+def contains_sensitive_keywords(text):
+    for keyword in SENSITIVE_KEYWORDS:
+        if re.search(rf'\b{keyword}\b', text, re.IGNORECASE):
+            log_event("Sensitive content detected and clipboard cleared.", detected_word=keyword)
+            return True
+    return False
+```
+### Clipboard clearing
+- The clipboard is automatically cleared if sensitive keywords are detected during clipboard monitoring.
+
+```python
+def clear_clipboard():
+    pyperclip.copy('')  # Replaces clipboard content with an empty string
+    print("Clipboard cleared.")  # Logs the action
+```
+File Scanning
+-------------
+
+### Supported File Types
+
+*   Text files (.txt)
+    
+*   PDFs (.pdf)
+    
+*   Word documents (.docx)
+    
+*   Excel spreadsheets (.xlsx)
+    
+*   Compressed files (.zip, .tar, .tar.gz)
+    
+
+### Scanning Process
+
+*   Extracts and scans supported file types for sensitive keywords.
+    
+*   Handles nested compressed files by extracting their content and performing recursive scanning.
+    
+
+### Example: Scanning PDF Files
+```python
+def scan_pdf_file(file_path):
+    reader = PdfReader(file_path)
+    text = "".join([page.extract_text() or "" for page in reader.pages])
+    return contains_sensitive_keywords(text)
+```
+Admin Features
+--------------
+
+### Keyword Management
+
+Admins can manage sensitive keywords dynamically through a secure GUI interface.
+
+**Admin Capabilities**:
+
+*   Add new keywords.
+    
+*   Remove existing keywords.
+    
+*   Clear all keywords.
+    
+
+### GUI and Tray Icon
+
+*   Provides a tray icon for quick access to the admin GUI and application controls.
+    
+*   The admin GUI is password-protected to ensure secure access.
+    
+
+### Admin GUI
+
+```python
+def admin_gui():
+    # Create a Listbox to display current keywords
+    keyword_listbox = Listbox(admin_window, height=10, width=50)
+    keyword_listbox.pack(pady=10)
+    # Add buttons for keyword management
+    tk.Button(admin_window, text="Add Keyword", command=add_keyword).pack(pady=5)
+```
+
+     
+
