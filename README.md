@@ -21,4 +21,4 @@ The following features are part of the DLP solution, along with the individuals 
 ---
 
 For additional details or queries, click on the contributor's name to visit their GitHub profile.
-The features also contain links to their codes as well as Readmes refer to them beofre contacting
+The features also contain links to their codes as well as Readmes refer to them before contacting
