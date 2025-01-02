@@ -70,5 +70,7 @@ The admin panel allows enabling or disabling the USB monitoring feature. This is
 - **Install `pywin32`**: Required for WMI functionality.
   ```bash
   pip install pywin32
-
-###Ensure that the exe runs on adminstrator privelages(Can be done using main.js of the electron app)
+---
+### Ensure that the exe runs on adminstrator privelages(Can be done using main.js of the electron app)
+### Contributed by:
+[@ved](https://github.com/NightFury224)  
