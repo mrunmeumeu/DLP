@@ -1,0 +1,57 @@
+.mainContent {
+  display: flex; /* Enables flexbox for centering */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 100vh; /* Full viewport height */
+  background-color: #364483; /* Light background for contrast */
+  font-family: Arial, sans-serif;
+}
+
+.inputSection,
+.selectedSection {
+  margin-bottom: 20px;
+}
+
+.inputLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.pathInput,
+.selectDropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.addButton,
+.deleteButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:hover,
+.deleteButton:hover {
+  background-color: #0056b3;
+}
+
+.deleteButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* New styles for the centered box */
+.boxContainer {
+  background-color: rgb(52, 55, 92); /* White box for content */
+  border-radius: 8px; /* Rounded corners for the box */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  padding: 30px; /* Padding inside the box */
+  width: 400px; /* Set a fixed width for the box */
+}

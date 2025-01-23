@@ -1,48 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { db } from './firebaseConfig'; // Import Firebase config
+import initializeFirebase from 'C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebase.js'; // Dynamic Firebase initialization
 import { ref, get } from 'firebase/database'; // Import necessary Firebase functions
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Required for Chart.js auto-setup
 import './Graph.css'; // Add your CSS file here
 
 const LineGraph = () => {
+  const [db, setDb] = useState(null); // State for Firebase database instance
   const [logsData, setLogsData] = useState({ days: [], data: [] });
 
-  // Fetch logs and usb_attempts from Firebase
-  const fetchLogsAndUsbAttempts = async () => {
+  // Fetch Firebase Database Instance
+  useEffect(() => {
+    const fetchFirebaseDb = async () => {
+      try {
+        const database = await initializeFirebase();
+        setDb(database);
+      } catch (error) {
+        console.error('Error initializing Firebase:', error);
+      }
+    };
+
+    fetchFirebaseDb();
+  }, []);
+
+  // Fetch logs, usb_attempts, executable_violations, and mail_violations from Firebase
+  const fetchData = async () => {
+    if (!db) return;
+  
     try {
-      // Fetch logs
-      const logsRef = ref(db, 'logs');
-      const logsSnapshot = await get(logsRef);
-
-      let logsArray = [];
-      if (logsSnapshot.exists()) {
-        const logs = logsSnapshot.val();
-        logsArray = Object.keys(logs).map(key => ({
-          id: key,
-          ...logs[key],
-        }));
-      }
-
-      // Fetch usb_attempts
-      const usbAttemptsRef = ref(db, 'usb_attempts');
-      const usbAttemptsSnapshot = await get(usbAttemptsRef);
-
-      let usbAttemptsArray = [];
-      if (usbAttemptsSnapshot.exists()) {
-        const usbAttempts = usbAttemptsSnapshot.val();
-        usbAttemptsArray = Object.keys(usbAttempts).map(key => ({
-          id: key,
-          ...usbAttempts[key],
-        }));
-      }
-
-      // Combine logs and usb_attempts into one array
-      const combinedArray = [...logsArray, ...usbAttemptsArray];
-
-      // Group logs by date and count the number of logs per day
+      const nodes = [
+        { name: 'logs', refPath: 'logs' },
+        { name: 'usb_attempts', refPath: 'usb_attempts' },
+        { name: 'executable_violations', refPath: 'executable_violations' },
+        { name: 'mail_violations', refPath: 'mail_violations' },
+      ];
+  
+      const nodePromises = nodes.map((node) =>
+        get(ref(db, node.refPath)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            return Object.keys(data).map((key) => ({
+              id: key,
+              ...data[key],
+            }));
+          }
+          return [];
+        })
+      );
+  
+      const [logsArray, usbAttemptsArray, execViolationsArray, mailViolationsArray] = await Promise.all(nodePromises);
+  
+      const combinedArray = [
+        ...logsArray,
+        ...usbAttemptsArray,
+        ...execViolationsArray,
+        ...mailViolationsArray,
+      ];
+  
       const logsByDate = combinedArray.reduce((acc, log) => {
         const date = new Date(log.timestamp).toLocaleDateString('en-US', {
+          year: 'numeric', // Include year to handle cross-year sorting
           month: 'short',
           day: 'numeric',
         });
@@ -50,30 +67,28 @@ const LineGraph = () => {
         acc[date]++;
         return acc;
       }, {});
-
-      // Convert logsByDate object into arrays for chart data
-      const days = Object.keys(logsByDate).sort((a, b) => new Date(a) - new Date(b)); // Sort from Dec 2 to Dec 3
-      const data = days.map(day => logsByDate[day]);
-
-      // Create a cumulative sum of the data for the y-values
+  
+      // Sort dates based on their actual chronological order
+      const days = Object.keys(logsByDate).sort((a, b) => new Date(a) - new Date(b));
+      const data = days.map((day) => logsByDate[day]);
+  
       let cumulativeTotal = 0;
-      const cumulativeData = data.map(flagCount => {
+      const cumulativeData = data.map((flagCount) => {
         cumulativeTotal += flagCount;
         return cumulativeTotal;
       });
-
+  
       setLogsData({ days, data: cumulativeData });
     } catch (error) {
-      console.error('Error fetching logs and usb_attempts:', error);
+      console.error('Error fetching data from Firebase:', error);
     }
   };
+  
 
-  // Fetch logs and usb_attempts when the component mounts
   useEffect(() => {
-    fetchLogsAndUsbAttempts();
-  }, []);
+    fetchData();
+  }, [db]);
 
-  // Chart.js data configuration
   const chartData = {
     labels: logsData.days || [],
     datasets: [
@@ -88,7 +103,6 @@ const LineGraph = () => {
     ],
   };
 
-  // Chart.js options configuration
   const options = {
     responsive: true,
     plugins: {
@@ -122,8 +136,7 @@ const LineGraph = () => {
 
   return (
     <div className="clientStatusContainer">
-      <div className="title">Total Policy Violations 
-      </div>
+      <div className="title">Total Policy Violations</div>
       <Line data={chartData} options={options} />
     </div>
   );

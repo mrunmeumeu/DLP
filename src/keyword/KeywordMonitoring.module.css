@@ -160,6 +160,7 @@
   box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12); /* Subtle shadow */
 }
 
+
 .clientsTable th {
   background-color: #262a33;
   color: #fff;
@@ -167,13 +168,18 @@
   padding: 12px 15px;
   font-size: 16px;
   font-weight: 700;
+  text-align: center; /* Center align header text */
 }
 
-.clientsTable tr {
-  border-bottom: 1px solid #3a3f47;
+.clientsTable tbody tr {
+  background-color: #171a1f; /* Consistent background for all rows */
 }
 
-.clientsTable tr:hover {
+.clientsTable tbody tr:nth-child(even) {
+  background-color: #171a1f; /* Same color for even rows */
+}
+
+.clientsTable tbody tr:hover {
   background-color: #2e3240;
 }
 
@@ -181,10 +187,12 @@
   padding: 12px 15px;
   font-size: 16px;
   color: #ddd;
+  text-align: center; /* Center align all cell text */
 }
 
 .clientsTable .ipColumn {
   color: #00c853; /* Green color for the IP address */
+  font-weight: bold; /* Make IPs stand out */
 }
 
 .clientsTable .nameColumn {
@@ -194,43 +202,32 @@
 /* Circular checkbox styling */
 /* Circular checkbox styling */
 .circularCheckbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkboxCustom {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-color: #262a33; /* Background for the checkbox */
-  border-radius: 50%; /* Makes it circular */
-  position: relative;
-  /* Green border */
-  cursor: pointer;
-  margin-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 50%; /* Makes the checkbox circular */
+  background-color: #fff;
+  transition: all 0.3s ease;
 }
 
-.circularCheckbox input[type="checkbox"] {
+input[type="checkbox"] {
+  position: absolute;
   opacity: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  cursor: pointer;
+  z-index: -1; /* Hides the actual checkbox */
 }
 
-.circularCheckbox:after {
-  content: "";
-  display: block;
-  width: 12px;
-  height: 12px;
-  background-color: transparent;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: background-color 0.2s ease;
-}
-
-.circularCheckbox input[type="checkbox"]:checked + .circularCheckbox:after {
-  background-color: #00c853; /* Change color when checked */
+.checkboxCustom.selected {
+  border-color: #28a745; /* Green border when selected */
+  background-color: #28a745; /* Green background when selected */
 }
 
 /* Toggle Wrapper */
@@ -274,4 +271,46 @@
 
 .toggle.active .toggleKnob {
   left: 33px; /* Shift the knob to the right when active */
+}
+.buttonWrapper {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center; /* Aligns the buttons vertically */
+  gap: 20px; /* Adds spacing between the buttons */
+  margin-top: 20px; /* Adds spacing above the buttons */
+}
+
+.startButton {
+  background-color: green; /* Green background for start */
+  color: white; /* White text for contrast */
+  border: none; /* Removes border */
+  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px 20px; /* Adds padding for a larger button */
+  font-size: 16px; /* Increases font size */
+  cursor: pointer; /* Shows pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.startButton:hover {
+  background-color: darkgreen; /* Darker green on hover */
+}
+
+.stopButton {
+  background-color: red; /* Red background for stop */
+  color: white; /* White text for contrast */
+  border: none; /* Removes border */
+  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px 20px; /* Adds padding for a larger button */
+  font-size: 16px; /* Increases font size */
+  cursor: pointer; /* Shows pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.stopButton:disabled {
+  background-color: gray; /* Gray background when disabled */
+  cursor: not-allowed; /* Not-allowed cursor when disabled */
+}
+
+.stopButton:hover:not(:disabled) {
+  background-color: darkred; /* Darker red on hover when not disabled */
 }

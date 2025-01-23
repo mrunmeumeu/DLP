@@ -601,7 +601,7 @@ color: #fff; /* White color for the client name */
 display: inline-block;
 width: 20px;
 height: 20px;
-background-color: #262a33; /* Background for the checkbox */
+background-color: #484f5f; /* Background for the checkbox */
 border-radius: 50%; /* Makes it circular */
 position: relative;
  /* Green border */
@@ -647,3 +647,47 @@ background-color: #00c853; /* Change color when checked */
   padding: 10px;
 }
 }
+
+.selectAllLabel {
+  font-size: 0.9rem;
+  color: #fff3f3;
+  margin-top: 4px;
+  display: block;
+  text-align: center;
+}
+
+.enableButton {
+  display: block; /* Makes it a block-level element */
+  margin: 0 auto; /* Centers the button horizontally */
+  background-color: green; /* Sets the button background color to green */
+  color: white; /* Text color for contrast */
+  border: none; /* Removes default border */
+  border-radius: 5px; /* Rounds the edges */
+  padding: 10px 20px; /* Adds padding for a larger click area */
+  font-size: 16px; /* Sets font size */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  text-align: center; /* Ensures text is centered */
+}
+
+.disableButton {
+  display: block; /* Makes it a block-level element */
+  margin: 10px auto; /* Centers the button horizontally and adds spacing */
+  background-color: gray; /* Sets the button background color */
+  color: white; /* Text color for contrast */
+  border: none; /* Removes default border */
+  border-radius: 5px; /* Rounds the edges */
+  padding: 10px 20px; /* Adds padding for a larger click area */
+  font-size: 16px; /* Sets font size */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  text-align: center; /* Ensures text is centered */
+}
+
+.contentFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the buttons vertically */
+  justify-content: center; /* Centers the buttons horizontally */
+  gap: 20px; /* Adds space between the buttons */
+  margin-top: 20px; /* Adds margin above the button container */
+}
+

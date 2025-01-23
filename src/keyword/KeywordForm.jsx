@@ -5,7 +5,6 @@ import styles from './KeywordForm.module.css';
 function KeywordForm() {
   const [keywords, setKeywords] = useState([]);
   const [newKeyword, setNewKeyword] = useState('');
-  const [selectedKeyword, setSelectedKeyword] = useState('');
 
   // Fetch the keywords from the server on component load
   useEffect(() => {
@@ -21,7 +20,7 @@ function KeywordForm() {
   }, []);
 
   // Add a new keyword
-  const handleAddKeyword = async () => {
+  const handleEnableKeyword = async () => {
     if (!newKeyword.trim()) return;
     try {
       const response = await axios.post('http://localhost:5000/keywords', { keyword: newKeyword });
@@ -30,22 +29,21 @@ function KeywordForm() {
         setNewKeyword('');
       }
     } catch (error) {
-      console.error("Error adding keyword:", error);
+      console.error("Error enabling keyword:", error);
     }
   };
 
-  // Delete the selected keyword
-  const handleDeleteKeyword = async () => {
-    if (!selectedKeyword) return;
-
+  // Disable the keyword
+  const handleDisableKeyword = async () => {
+    if (!newKeyword.trim()) return;
     try {
-      const response = await axios.delete(`http://localhost:5000/keywords/${selectedKeyword}`);
+      const response = await axios.delete(`http://localhost:5000/keywords/${newKeyword}`);
       if (response.status === 200) {
         setKeywords(response.data.keywords); // Update with the new keyword list from the server
-        setSelectedKeyword(''); // Clear selection after deletion
+        setNewKeyword('');
       }
     } catch (error) {
-      console.error("Error deleting keyword:", error);
+      console.error("Error disabling keyword:", error);
     }
   };
 
@@ -53,7 +51,7 @@ function KeywordForm() {
     <div className={styles.keywordForm}>
       <div className={styles.inputSection}>
         <label htmlFor="keywordInput" className={styles.inputLabel}>
-          Add a Keyword to Restrict
+          Manage Keywords
         </label>
         <input
           type="text"
@@ -63,32 +61,24 @@ function KeywordForm() {
           className={styles.keywordInput}
           placeholder="Enter keyword here"
         />
-        <button onClick={handleAddKeyword} className={styles.addButton}>Add</button>
+        <div className={styles.buttonGroup}>
+          <button onClick={handleEnableKeyword} className={styles.enableButton}>
+            Enable Keyword
+          </button>
+          <button onClick={handleDisableKeyword} className={styles.disableButton}>
+            Disable Keyword
+          </button>
+        </div>
       </div>
-      <div className={styles.selectedSection}>
-        <label htmlFor="selectedKeywords" className={styles.inputLabel}>
+      <div className={styles.keywordList}>
+        <label htmlFor="currentKeywords" className={styles.inputLabel}>
           Current Keywords
         </label>
-        <select
-          id="selectedKeywords"
-          className={styles.selectDropdown}
-          value={selectedKeyword}
-          onChange={(e) => setSelectedKeyword(e.target.value)}
-        >
-          <option value="" disabled>Select a keyword</option>
+        <ul className={styles.keywordListItems}>
           {keywords.map((keyword, index) => (
-            <option key={index} value={keyword}>
-              {keyword}
-            </option>
+            <li key={index}>{keyword}</li>
           ))}
-        </select>
-        <button
-          onClick={handleDeleteKeyword}
-          className={styles.deleteButton}
-          disabled={!selectedKeyword}
-        >
-          Delete Selected Keyword
-        </button>
+        </ul>
       </div>
     </div>
   );

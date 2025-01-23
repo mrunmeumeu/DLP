@@ -550,3 +550,21 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
+.enableButton {
+  background-color: green;
+  color: white;
+}
+
+.enableButton:hover {
+  background-color: darkgreen;
+}
+
+.disableButton {
+  background-color: red;
+  color: white;
+}
+
+.disableButton:hover {
+  background-color: darkred;
+}

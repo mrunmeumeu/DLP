@@ -1,0 +1,167 @@
+/* ClientLogViewer container styling */
+.clientLogViewer {
+  max-width: 900px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #1b1f26;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: #e6e6e6;
+  font-family: Arial, sans-serif;
+}
+
+/* Main title styling */
+.clientLogViewer h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+/* Section titles */
+.clientLogViewer h3 {
+  font-size: 22px;
+  margin-top: 20px;
+  color: #ccc;
+  text-align: center;
+}
+
+/* Dropdown styling */
+label {
+  font-size: 18px;
+  color: #ddd;
+  margin-bottom: 10px;
+  display: block;
+  text-align: center;
+}
+
+select {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #715fc3;
+  background-color: #262a33;
+  color: #e6e6e6;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+select:hover {
+  background-color: #3a3f47;
+  border-color: #6047b2;
+}
+
+/* Table container */
+.logTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #262a33;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Table headers */
+.logTable th {
+  background-color: #715fc3;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  font-size: 16px;
+}
+
+/* Table rows */
+.logTable td {
+  text-align: center;
+  padding: 12px 10px;
+  color: #ddd;
+  font-size: 15px;
+  border-bottom: 1px solid #3a3f47;
+}
+.logTable tr {
+  background-color: #262a33; /* Default background color for all rows */
+}
+
+.logTable tr:hover {
+  background-color: #3a3f47;
+}
+
+/* Last row border */
+.logTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Log buttons */
+.logButton {
+  padding: 8px 15px;
+  background-color: #715fc3;
+  color: #fff;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logButton:hover {
+  background-color: #6047b2;
+}
+
+/* Graph container */
+.graphContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.graphContainer canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Open ports list */
+.openPorts {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #262a33;
+  border-radius: 8px;
+}
+
+.openPorts h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.openPorts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.openPorts li {
+  font-size: 16px;
+  color: #ddd;
+  padding: 5px 0;
+  border-bottom: 1px solid #3a3f47;
+}
+
+.openPorts li:last-child {
+  border-bottom: none;
+}
+
+/* Loading and error messages */
+.loading {
+  font-size: 18px;
+  color: #aaa;
+  text-align: center;
+}
+
+.error {
+  font-size: 18px;
+  color: #ff4c4c;
+  text-align: center;
+  margin-top: 10px;
+}

@@ -1,0 +1,16 @@
+/* General layout for ReportPage */
+.reportPage {
+    display: flex;
+    height: 100vh;
+    background-color: #000; /* Background color for the entire page */
+  }
+  
+  /* Main content area styling */
+  .mainContent {
+    flex: 1;
+    padding: 20px;
+    background-color: #171a1f; /* Dark background for the main content */
+    overflow-y: auto;
+    color: #fff;
+  }
+  

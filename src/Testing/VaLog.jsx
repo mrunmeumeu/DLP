@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, get } from 'firebase/database';
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAWq44RtI569PW15hcGJNR6mR4IKZ8v2t0",
-    authDomain: "clipboard-81621.firebaseapp.com",
-    databaseURL: "https://clipboard-81621-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "clipboard-81621",
-    storageBucket: "clipboard-81621.firebasestorage.app",
-    messagingSenderId: "618629702430",
-    appId: "1:618629702430:web:d91bbca79bd97ecfd39f0f",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+import initializeFirebase from 'C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebase.js'; // Import dynamic Firebase initialization
+import { ref, get } from 'firebase/database';
 
 const PortStatusGraph = () => {
+  const [db, setDb] = useState(null); // State to store Firebase database instance
   const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState('');
   const [data, setData] = useState({ open: 0, closed: 0 });
   const [openPorts, setOpenPorts] = useState([]); // To store open ports
   const [loading, setLoading] = useState(true);
 
+  // Initialize Firebase and set database instance
+  useEffect(() => {
+    const fetchFirebaseDb = async () => {
+      try {
+        const database = await initializeFirebase();
+        setDb(database);
+      } catch (error) {
+        console.error('Error initializing Firebase:', error);
+      }
+    };
+
+    fetchFirebaseDb();
+  }, []);
+
+  // Fetch devices data
   useEffect(() => {
     const fetchDevices = async () => {
+      if (!db) return;
+
       try {
-        const snapshot = await get(ref(database, 'vulnerability_assessment'));
+        const snapshot = await get(ref(db, 'vulnerability_assessment'));
         if (snapshot.exists()) {
           const assessmentData = snapshot.val();
           const deviceList = Object.entries(assessmentData).map(([key, value]) => ({
@@ -47,20 +50,20 @@ const PortStatusGraph = () => {
     };
 
     fetchDevices();
-  }, []);
+  }, [db]);
 
+  // Fetch port status data for the selected device
   useEffect(() => {
     const fetchData = async () => {
-      if (!selectedDevice) return;
+      if (!selectedDevice || !devices.length) return;
 
       setLoading(true);
       const selectedDeviceData = devices.find((device) => device.id === selectedDevice);
-      console.log('Selected Device Data:', selectedDeviceData);
 
       if (selectedDeviceData && selectedDeviceData.assessment) {
         let openCount = 0;
         let closedCount = 0;
-        const openPortsList = []; // To store the port numbers of open ports
+        const openPortsList = [];
 
         Object.entries(selectedDeviceData.assessment).forEach(([port, details]) => {
           if (details.Status === 'Open') {
@@ -72,7 +75,6 @@ const PortStatusGraph = () => {
           }
         });
 
-        console.log('Open Count:', openCount, 'Closed Count:', closedCount);
         setData({ open: openCount, closed: closedCount });
         setOpenPorts(openPortsList); // Update the open ports list
       }
@@ -83,7 +85,6 @@ const PortStatusGraph = () => {
   }, [selectedDevice, devices]);
 
   const handleDeviceChange = (event) => {
-    console.log('New Selected Device ID:', event.target.value);
     setSelectedDevice(event.target.value);
   };
 

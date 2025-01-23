@@ -19,9 +19,14 @@ import LogViewer from './Testing/LogViewer';
 import PortStatusGraph from './Testing/VaLog';
 import Viewers from './Viewers/VulnerabilityAssessment';
 import UserDataPage from './Analysis/Analysis';
+import Behave from './Behave/BehaveAna';
 import DataAna from './Analysis/DataAnalyse';
 import AuditAna from './AuditPage/DataAnalyse';
 import Encrypt from './Encryption/Encrypt';
+import Individual from './BehaveIndi/IndividualAna';
+import LogPage from './VA_Logs/VA_Page';
+import LastHourViolations from './Alert/Alert';
+import ExecMonP from './Listing/monitoring/Executable';
 function App() {
   return (
       
@@ -31,7 +36,7 @@ function App() {
         {/* <Sidebar /> */}
         <Routes>
           <Route path="/usb" element={<AetherisHomepage />} />
-          <Route path="/" element={<Listing />} />
+          <Route path="/" element={<Testing />} />
           <Route path="/va-scans" element={<VulnerabilityAssessment />} />
           <Route path="/keyword-management" element={<KeywordMonitoring/>} />
           {<Route path="/client/:ip/usb-monitoring" element={<AetherisHomepageP />} /> }
@@ -42,15 +47,20 @@ function App() {
           <Route path="/reports" element ={<ReportPage/>}/>
           <Route path="/ss-blocking" element ={<Screenshot/>}/>
           <Route path="/client/:ip" element={<Dashboard />} />
-          <Route path="/testing" element={<Testing />} />
+          <Route path="/client/:ip/executable-monitoring" element={<ExecMonP />} />
+          <Route path="/dashboard" element={<Listing />} />
           <Route path="/logs" element={<LogViewer />} />
-          <Route path="/valogs" element={<PortStatusGraph />} />
+          <Route path="/valogs" element={<LogPage />} />
           <Route path="/viewers" element={<Viewers />} />
 
           <Route path="/encryption" element={<Encrypt />} />
           { <Route path="/analysis" element={<AuditAna/>} /> }
           <Route path="/analysis/:username" element={<DataAna />} />
-          
+
+          <Route path="/behaveAna" element={<Behave />} />
+          <Route path="/behaveAna/:username" element={<Individual />} />
+          <Route path="/alert" element={<LastHourViolations />} />
+
           
 
           

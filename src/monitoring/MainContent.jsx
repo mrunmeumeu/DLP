@@ -6,6 +6,7 @@ function MainContent() {
   const [clients, setClients] = useState([]); // Store the list of clients
   const [selectedClients, setSelectedClients] = useState([]); // Store selected clients
   const [authorizedBy, setAuthorizedBy] = useState(""); // Store the selected name from the dropdown
+  const [selectAll, setSelectAll] = useState(false); // Track the "Select All" state
 
   const authorizedNames = ["Admin1", "Admin2", "Admin3"]; // Sample names for authorization
 
@@ -24,12 +25,29 @@ function MainContent() {
 
   // Handle client checkbox toggle
   const handleClientSelection = (ip) => {
-    if (selectedClients.includes(ip)) {
-      setSelectedClients(selectedClients.filter(client => client !== ip));
-    } else {
-      setSelectedClients([...selectedClients, ip]);
-    }
+    setSelectedClients((prevSelectedClients) =>
+      prevSelectedClients.includes(ip)
+        ? prevSelectedClients.filter(client => client !== ip)
+        : [...prevSelectedClients, ip]
+    );
   };
+
+  // Handle "Select All" checkbox toggle
+  const handleSelectAll = () => {
+    if (selectAll) {
+      // Deselect all clients
+      setSelectedClients([]);
+    } else {
+      // Select all clients
+      setSelectedClients(clients.map(client => client.ip));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // Sync the "Select All" checkbox with individual selections
+  useEffect(() => {
+    setSelectAll(selectedClients.length === clients.length && clients.length > 0);
+  }, [selectedClients, clients]);
 
   // Function to enable executable monitoring for selected clients
   const enableExecutableMonitoring = async () => {
@@ -46,18 +64,18 @@ function MainContent() {
       const response = await axios.post(
         'http://localhost:5000/enable-executable-monitoring',
         {
-          client_ids: selectedClients, // Send selected clients' IPs
-          authorized_by: authorizedBy // Include the authorized person's name
+          client_ids: selectedClients,
+          authorized_by: authorizedBy,
         },
         {
           headers: {
-            'Content-Type': 'application/json' // Explicitly set Content-Type
+            'Content-Type': 'application/json',
           }
         }
       );
       console.log('Executable monitoring enabled:', response.data);
       alert("Executable monitoring enabled for selected clients.");
-    }catch (error) {
+    } catch (error) {
       alert("An error occurred while enabling executable monitoring.");
       console.error(error);
     }
@@ -76,8 +94,8 @@ function MainContent() {
 
     try {
       const response = await axios.post('http://localhost:5000/disable-executable-monitoring', {
-        client_ids: selectedClients, // Send selected clients' IPs
-        authorized_by: authorizedBy // Include the authorized person's name
+        client_ids: selectedClients,
+        authorized_by: authorizedBy,
       });
       console.log('Executable monitoring disabled:', response.data);
       alert("Executable monitoring disabled for selected clients.");
@@ -120,7 +138,16 @@ function MainContent() {
         <table className={styles.clientsTable}>
           <thead>
             <tr>
-              <th>Select</th>
+              <th>
+                <label className={styles.circularCheckbox}>
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                  <span>Select All</span>
+                </label>
+              </th>
               <th>IP Address</th>
               <th>Client Name</th>
             </tr>
@@ -133,7 +160,7 @@ function MainContent() {
                     <input
                       type="checkbox"
                       checked={selectedClients.includes(client.ip)}
-                      onChange={() => handleClientSelection(client.ip)} // Toggle client selection
+                      onChange={() => handleClientSelection(client.ip)}
                     />
                     <span className={styles.circularCheckbox}></span>
                   </label>

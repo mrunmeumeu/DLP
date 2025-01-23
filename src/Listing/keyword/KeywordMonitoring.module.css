@@ -295,3 +295,50 @@
 .toggle.active .toggleKnob {
   left: 33px; /* Shift the knob to the right when active */
 }
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Align buttons vertically */
+  gap: 30px; /* Increase space between buttons */
+  margin-bottom: 30px; /* Add spacing below the buttons */
+}
+
+.enableButton,
+.disableButton {
+  padding: 20px 40px; /* Larger padding for bigger buttons */
+  font-size: 18px; /* Increase font size for better readability */
+  font-weight: bold;
+  border: none;
+  border-radius: 10px; /* Rounded corners for a modern look */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 250px; /* Fixed width for uniformity */
+  text-align: center;
+}
+
+.enableButton {
+  background-color: green;
+  color: white;
+}
+
+.enableButton:hover {
+  background-color: darkgreen;
+  transform: scale(1.1); /* Slight zoom effect for hover */
+}
+
+.disableButton {
+  background-color: red;
+  color: white;
+}
+
+.disableButton:hover {
+  background-color: darkred;
+  transform: scale(1.1); /* Slight zoom effect for hover */
+}
+
+.disableButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed; /* Cursor changes to indicate disabled state */
+}
+

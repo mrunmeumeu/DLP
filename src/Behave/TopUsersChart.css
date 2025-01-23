@@ -1,0 +1,77 @@
+.topUsersChart {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .topUsersTableContainer {
+    margin-top: 20px;
+    background-color: rgba(38, 42, 51, 0.9);
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .topUsersTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .topUsersTable th,
+  .topUsersTable td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #34495e;
+    color: #bdc3c7;
+  }
+  
+  .topUsersTable th {
+    background-color: #34495e;
+    font-weight: bold;
+  }
+  
+  .topUsersTable tr:nth-child(even) {
+    background-color: #2c3e50;
+  }
+  
+  .topUsersTable tr:hover {
+    background-color: #1abc9c;
+    color: #ecf0f1;
+  }
+  
+  .topUsersTable td.violationCount {
+    color: #e74c3c !important; /* Red color for violation counts */
+    font-weight: bold;
+  }
+  
+  .doughnutChartContainer {
+    margin-top: 20px;
+    background-color: rgba(38, 42, 51, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chartTitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-bottom: 10px;
+  }
+  .topOffendersTitle {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ecf0f1;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .usernameLink {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .usernameLink:hover {
+    color: #1abc9c;
+    text-decoration: underline;
+  }
+  

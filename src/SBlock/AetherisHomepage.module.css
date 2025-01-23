@@ -599,6 +599,7 @@
 
 .clientsTable tr {
   border-bottom: 1px solid #3a3f47;
+  
 }
 
 .clientsTable tr:hover {
@@ -617,6 +618,24 @@
 
 .clientsTable .nameColumn {
   color: #fff; /* White color for the client name */
+}
+
+
+.statusColumn {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.statusColumn.green {
+  color: #00c853;
+}
+
+.statusColumn.red {
+  color: red;
+}
+
+.statusColumn.black {
+  color: black;
 }
 
 .clientHeaderBox {
@@ -688,4 +707,44 @@
   .clientsTable th, .clientsTable td {
     padding: 10px;
   }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center; /* Aligns the buttons vertically */
+  gap: 20px; /* Adds space between the buttons */
+  margin: 20px 0; /* Adds margin above and below the button container */
+}
+
+.enableButton {
+  background-color: green; /* Green background for enable */
+  color: white; /* White text for contrast */
+  border: none; /* Removes border */
+  border-radius: 5px; /* Adds slightly rounded corners */
+  padding: 10px 20px; /* Adds padding for larger clickable area */
+  font-size: 16px; /* Increases font size */
+  font-weight: bold; /* Makes the text bold */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.enableButton:hover {
+  background-color: darkgreen; /* Darker green on hover */
+}
+
+.disableButton {
+  background-color: red; /* Red background for disable */
+  color: white; /* White text for contrast */
+  border: none; /* Removes border */
+  border-radius: 5px; /* Adds slightly rounded corners */
+  padding: 10px 20px; /* Adds padding for larger clickable area */
+  font-size: 16px; /* Increases font size */
+  font-weight: bold; /* Makes the text bold */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.disableButton:hover {
+  background-color: darkred; /* Darker red on hover */
 }

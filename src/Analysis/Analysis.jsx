@@ -1,59 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { db } from './firebaseConfig'; // Import Firebase config
-import { ref, get } from 'firebase/database'; // Import necessary Firebase functions
-import './UserDataPage.css'; // Import the CSS file
+import initializeFirebase from 'C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebase.js'; // Dynamic Firebase initialization
+import { ref, get } from 'firebase/database';
+import './UserDataPage.css';
 
 const UserDataPage = () => {
-  const { username } = useParams(); // Extract username from route
-  const [totalViolations, setTotalViolations] = useState(0); // Total violations for the user
-  const [clipboardCount, setClipboardCount] = useState(0); // Violations from logs with username
-  const [ssCount, setSsCount] = useState(0); // Violations from logs with device
-  const [usbLogsCount, setUsbLogsCount] = useState(0); // Violations from usb_attempts
-  const [execMonitoringCount, setExecMonitoringCount] = useState(0); // Violations from executable_monitoring
-  const [logs, setLogs] = useState([]); // Combined logs for the table
-  const [selectedHistory, setSelectedHistory] = useState(''); // Track selected history type
-  const [historyData, setHistoryData] = useState([]); // Store history data
+  const { username } = useParams();
+  const [db, setDb] = useState(null); // State to store Firebase database instance
+  const [totalViolations, setTotalViolations] = useState(0);
+  const [clipboardCount, setClipboardCount] = useState(0);
+  const [ssCount, setSsCount] = useState(0);
+  const [usbLogsCount, setUsbLogsCount] = useState(0);
+  const [execMonitoringCount, setExecMonitoringCount] = useState(0);
+  const [mailViolationsCount, setMailViolationsCount] = useState(0);
 
-  // Fetch violations count and logs from Firebase
+  const [logs, setLogs] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedHistory, setSelectedHistory] = useState('');
+  const [historyData, setHistoryData] = useState([]);
+
+  // Fetch Firebase Database Instance
+  useEffect(() => {
+    const fetchFirebaseDb = async () => {
+      try {
+        const database = await initializeFirebase();
+        setDb(database);
+      } catch (error) {
+        console.error('Error initializing Firebase:', error);
+      }
+    };
+
+    fetchFirebaseDb();
+  }, []);
+
   const fetchData = async () => {
-    if (!username) return;
+    if (!username || !db) return;
 
     try {
-      const logsRef = ref(db, 'logs'); // Reference to 'logs' node
-      const usbAttemptsRef = ref(db, 'usb_attempts'); // Reference to 'usb_attempts' node
-      const execMonitoringRef = ref(db, 'executable_monitoring'); // Reference to 'executable_monitoring' node
+      const logsRef = ref(db, 'logs');
+      const usbAttemptsRef = ref(db, 'usb_attempts');
+      const execMonitoringRef = ref(db, 'executable_violations');
+      const mailViolationsRef = ref(db, 'mail_violations'); // Reference to mail_violations node
+      const outlookViolationsRef = ref(db, 'outlook_violations'); // Reference to outlook_violations node
 
-      const [logsSnapshot, usbAttemptsSnapshot, execMonitoringSnapshot] = await Promise.all([
+      const [logsSnapshot, usbAttemptsSnapshot, execMonitoringSnapshot,mailViolationsSnapshot,outlookViolationsSnapshot] = await Promise.all([
         get(logsRef),
         get(usbAttemptsRef),
         get(execMonitoringRef),
+        get(mailViolationsRef), // Fetch mail violations data
+        get(outlookViolationsRef),
+
       ]);
 
       let clipboardCount = 0;
       let ssCount = 0;
       let usbLogsCount = 0;
       let execMonitoringCount = 0;
+      let mailViolationsCount = 0;
+
       let combinedLogs = [];
 
-      // Process logs for the user
       if (logsSnapshot.exists()) {
         const logs = logsSnapshot.val();
-
-        // Filter logs by type
         const clipboardLogs = Object.values(logs).filter((log) => log.username === username);
         const ssLogs = Object.values(logs).filter((log) => log.device === username);
 
-        // Update counts
         clipboardCount = clipboardLogs.length;
         ssCount = ssLogs.length;
 
-        // Add logs to the combined list
         combinedLogs = combinedLogs.concat(
           clipboardLogs.map((log) => ({
             type: 'Clipboard Attempt',
             timestamp: log.timestamp || 'N/A',
-            additionalInfo: log.detected_word || 'N/A',
+            additionalInfo: log.detected_word || log.event_description ||'N/A',
           })),
           ssLogs.map((log) => ({
             type: 'SS Attempt',
@@ -63,7 +82,6 @@ const UserDataPage = () => {
         );
       }
 
-      // Process USB attempts for the user
       if (usbAttemptsSnapshot.exists()) {
         const usbAttempts = usbAttemptsSnapshot.val();
         const userUsbLogs = Object.values(usbAttempts).filter((attempt) => attempt.user === username);
@@ -79,10 +97,9 @@ const UserDataPage = () => {
         );
       }
 
-      // Process Executable Monitoring logs for the user
       if (execMonitoringSnapshot.exists()) {
         const execMonitoringLogs = execMonitoringSnapshot.val();
-        const userExecLogs = Object.values(execMonitoringLogs).filter((log) => log.user === username);
+        const userExecLogs = Object.values(execMonitoringLogs).filter((log) => log.device_name === username);
 
         execMonitoringCount = userExecLogs.length;
 
@@ -90,29 +107,58 @@ const UserDataPage = () => {
           userExecLogs.map((log) => ({
             type: 'Executable Monitoring',
             timestamp: log.timestamp || 'N/A',
-            additionalInfo: `${log.action || 'N/A'} by ${log.authorized_by || 'Unknown'}`,
+            additionalInfo: `${log.action || 'N/A'} by ${log.exe_name || 'Unknown'}`,
+          }))
+        );
+      }
+      if (mailViolationsSnapshot.exists()) {
+        const mailViolations = mailViolationsSnapshot.val();
+        const userMailLogs = Object.values(mailViolations).filter((log) => log.device_name === username);
+
+        mailViolationsCount = userMailLogs.length;
+
+        combinedLogs = combinedLogs.concat(
+          userMailLogs.map((log) => ({
+            type: 'Mail Violation',
+            timestamp: log.timestamp || 'N/A',
+            additionalInfo: log.word_detected || 'N/A',
           }))
         );
       }
 
-      // Sort logs by timestamp (latest first)
+
+      if (outlookViolationsSnapshot.exists()) {
+        const outlookViolations = outlookViolationsSnapshot.val();
+        const userOutlookLogs = Object.values(outlookViolations).filter((log) => log.device_name === username);
+  
+        mailViolationsCount += userOutlookLogs.length;
+  
+        combinedLogs = combinedLogs.concat(
+          userOutlookLogs.map((log) => ({
+            type: 'Outlook Violation',
+            timestamp: log.timestamp || 'N/A',
+            additionalInfo: log.keywords ? log.keywords.join(', ') : 'N/A',
+          }))
+        );
+      }
+      
       combinedLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-      // Set counts and logs
       setClipboardCount(clipboardCount);
       setSsCount(ssCount);
       setUsbLogsCount(usbLogsCount);
       setExecMonitoringCount(execMonitoringCount);
-      setTotalViolations(clipboardCount + ssCount + usbLogsCount + execMonitoringCount);
+      setMailViolationsCount(mailViolationsCount);
+
+      setTotalViolations(clipboardCount + ssCount + usbLogsCount + execMonitoringCount + mailViolationsCount);
       setLogs(combinedLogs);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // Fetch history data
   const fetchHistory = async () => {
-    if (!selectedHistory || !username) return;
+    if (!selectedHistory || !username || !db) return;
 
     let historyRef;
     switch (selectedHistory) {
@@ -132,8 +178,7 @@ const UserDataPage = () => {
     try {
       const snapshot = await get(historyRef);
       if (snapshot.exists()) {
-        const data = Object.values(snapshot.val());
-        setHistoryData(data);
+        setHistoryData(Object.values(snapshot.val()));
       } else {
         setHistoryData([]);
       }
@@ -142,21 +187,19 @@ const UserDataPage = () => {
     }
   };
 
-  // Fetch data when the component mounts
   useEffect(() => {
     fetchData();
-  }, [username]);
+  }, [username, db]);
 
-  // Fetch history data when history type changes
   useEffect(() => {
     fetchHistory();
-  }, [selectedHistory]);
+  }, [selectedHistory, db]);
+
+  const filteredLogs = selectedFilter === 'All' ? logs : logs.filter((log) => log.type === selectedFilter);
 
   return (
     <div className="userDataPage">
       <h1>{`Audits for ${username}`}</h1>
-
-      {/* Total Violations Box */}
       {!selectedHistory && (
         <div className="violationsBox">
           <div className="violationsRow">
@@ -180,11 +223,14 @@ const UserDataPage = () => {
               <div className="violationLabel">Exec Monitoring Count</div>
               <div className="violationValue">{execMonitoringCount}</div>
             </div>
+            <div className="violationColumn">
+            <div className="violationLabel">Mail Violations</div>
+            <div className="violationValue">{mailViolationsCount}</div>
+          </div>
           </div>
         </div>
       )}
 
-      {/* History Dropdown */}
       <div className="historyDropdown">
         <label htmlFor="historySelect">Select History:</label>
         <select
@@ -199,8 +245,7 @@ const UserDataPage = () => {
         </select>
       </div>
 
-      {/* History Table */}
-      {selectedHistory && (
+      {selectedHistory ? (
         <div className="historyTableContainer">
           <h2>{selectedHistory}</h2>
           <table className="historyTable">
@@ -222,18 +267,13 @@ const UserDataPage = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="noData">
-                    No history data available
-                  </td>
+                  <td colSpan="3">No history data available</td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-      )}
-
-      {/* Logs Table */}
-      {!selectedHistory && (
+      ) : (
         <div className="logsTableContainer">
           <h2>Detailed Logs</h2>
           <table className="logsTable">
@@ -246,8 +286,8 @@ const UserDataPage = () => {
               </tr>
             </thead>
             <tbody>
-              {logs.length > 0 ? (
-                logs.map((log, index) => (
+              {filteredLogs.length > 0 ? (
+                filteredLogs.map((log, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{log.type}</td>
@@ -257,9 +297,7 @@ const UserDataPage = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="noData">
-                    No logs available
-                  </td>
+                  <td colSpan="4">No logs available</td>
                 </tr>
               )}
             </tbody>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import styles from './VulnerabilityAssessment.module.css';
+import { db, ref, get } from "C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebaseConfig.js";
 
 function ClientLogs() {
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState("");
+  const [selectedClientName, setSelectedClientName] = useState("");
   const [logFiles, setLogFiles] = useState([]);
   const [keywordContent, setKeywordContent] = useState("");
   const [usbLogContent, setUsbLogContent] = useState("");
@@ -12,6 +15,7 @@ function ClientLogs() {
   const [showLogFiles, setShowLogFiles] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -27,6 +31,7 @@ function ClientLogs() {
 
   const handleClientSelection = (ip) => {
     setSelectedClient(ip === selectedClient ? "" : ip);
+    
   };
 
   const clearLogs = () => {
@@ -37,31 +42,14 @@ function ClientLogs() {
     setShowLogFiles(false);
   };
 
-  const requestLogs = async () => {
-    if (!selectedClient) {
-      alert("Please select a client.");
-      return;
-    }
-
-    clearLogs();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.post('http://localhost:5000/give-logs', {
-        client_ids: [selectedClient]
-      });
-
-      console.log("Log request response:", response.data);
-      alert("Log request sent to selected client.");
-      await fetchLogs();
-    } catch (error) {
-      setError("Error requesting logs.");
-      console.error("Error requesting logs:", error);
-    } finally {
-      setLoading(false);
-    }
+  const requestLogs = () => {
+    // Navigate to the logs page
+    navigate(`/valogs`);
   };
+
+  
+  
+  
 
   const fetchLogs = async () => {
     try {
@@ -193,7 +181,7 @@ function ClientLogs() {
       </div>
 
       <button className={styles.actionButton} onClick={requestLogs}>
-        <span className={styles.actionButtonText}>Request Logs</span>
+        <span className={styles.actionButtonText}>Get VA logs</span>
       </button>
 
       <button className={styles.actionButton} onClick={requestKeywordLogs}>

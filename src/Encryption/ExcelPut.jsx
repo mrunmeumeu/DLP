@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ref, set } from 'firebase/database';
-import { db } from './firebaseConfig'; // Import your Firebase configuration file
+import initializeFirebase from 'C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebase.js'; // Import dynamic Firebase initialization
 import './AddFilePassword.css'; // Import the CSS file for styling
 
 const AddFilePassword = () => {
@@ -8,12 +8,33 @@ const AddFilePassword = () => {
   const [password, setPassword] = useState('');
   const [fileType, setFileType] = useState('pdf'); // Default file type is PDF
   const [status, setStatus] = useState('');
+  const [db, setDb] = useState(null); // State to store Firebase database instance
+
+  // Dynamically initialize Firebase
+  useEffect(() => {
+    const initializeDb = async () => {
+      try {
+        const database = await initializeFirebase();
+        setDb(database);
+      } catch (error) {
+        console.error('Error initializing Firebase:', error);
+        setStatus('Failed to initialize Firebase.');
+      }
+    };
+
+    initializeDb();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!fileName || !password) {
       setStatus('Please enter both file name and password.');
+      return;
+    }
+
+    if (!db) {
+      setStatus('Firebase is not initialized yet. Please try again later.');
       return;
     }
 

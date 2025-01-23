@@ -1,0 +1,65 @@
+.violationsContainer {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .violationsBox {
+    background-color: #1e1e2f;
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .violationsBox:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .violationsBox h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .totalViolations {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #00d4ff;
+  }
+  
+  .clickText {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+  
+  .breakdownBox {
+    margin-top: 20px;
+    background-color: #2a2a3f;
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .breakdownBox h3 {
+    margin-bottom: 10px;
+  }
+  
+  .breakdownBox ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .breakdownBox li {
+    margin: 10px 0;
+  }
+  
+  .violationType {
+    font-weight: bold;
+    color: #00d4ff;
+  }
+  

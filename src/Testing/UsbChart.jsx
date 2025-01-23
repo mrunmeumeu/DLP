@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Chart } from 'chart.js'; // Explicitly import Chart
-import { Bar, Doughnut } from 'react-chartjs-2'; // Use Doughnut for ring charts
-import 'chart.js/auto';
-import { db, ref, get } from './firebaseConfig';
-import './RowGraphs.css';
+import initializeFirebase from 'C:\\Users\\Mrunmai\\intern\\attempt\\pg1\\src\\firebase.js'; // Import dynamic Firebase initialization
+import { ref, get } from 'firebase/database'; // Import necessary Firebase functions
+import { Bar, Doughnut } from 'react-chartjs-2'; // Import chart components
+import 'chart.js/auto'; // Required for Chart.js auto-setup
+import './RowGraphs.css'; // Add your CSS file here
 
 const Graphs = () => {
+  const [db, setDb] = useState(null); // State for Firebase database instance
   const [blocked, setBlocked] = useState(0);
   const [notBlocked, setNotBlocked] = useState(0);
   const [keywordOn, setKeywordOn] = useState(0);
@@ -14,6 +15,22 @@ const Graphs = () => {
   const [ssOff, setSsOff] = useState(0);
 
   useEffect(() => {
+    // Fetch Firebase Database Instance
+    const fetchFirebaseDb = async () => {
+      try {
+        const database = await initializeFirebase();
+        setDb(database);
+      } catch (error) {
+        console.error('Error initializing Firebase:', error);
+      }
+    };
+
+    fetchFirebaseDb();
+  }, []);
+
+  useEffect(() => {
+    if (!db) return; // Wait for Firebase to initialize
+
     const fetchUSBData = async () => {
       try {
         const usbRef = ref(db, 'usblogs');
@@ -36,7 +53,7 @@ const Graphs = () => {
           setNotBlocked(notBlockedCount);
         }
       } catch (error) {
-        console.error("Error fetching USB blocking data: ", error);
+        console.error('Error fetching USB blocking data:', error);
       }
     };
 
@@ -62,7 +79,7 @@ const Graphs = () => {
           setKeywordOff(offCount);
         }
       } catch (error) {
-        console.error("Error fetching keyword monitoring data: ", error);
+        console.error('Error fetching keyword monitoring data:', error);
       }
     };
 
@@ -88,14 +105,14 @@ const Graphs = () => {
           setSsOff(offCount);
         }
       } catch (error) {
-        console.error("Error fetching screenshot blocking data: ", error);
+        console.error('Error fetching screenshot blocking data:', error);
       }
     };
 
     fetchUSBData();
     fetchKeywordData();
     fetchSSData();
-  }, []);
+  }, [db]);
 
   const usbData = {
     labels: ['USBs Not Blocked', 'USBs Blocked'],
@@ -169,21 +186,6 @@ const Graphs = () => {
     plugins: {
       legend: {
         display: false,
-      },
-      customCenterText: {
-        beforeDraw(chart) {
-          const { width } = chart;
-          const ctx = chart.ctx;
-          const percentage = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
-
-          ctx.save();
-          ctx.font = 'bold 24px Arial';
-          ctx.fillStyle = '#4caf50';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(`${percentage}%`, width / 2, chart.height / 2);
-          ctx.restore();
-        },
       },
     },
     cutout: '75%',

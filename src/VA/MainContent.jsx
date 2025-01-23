@@ -5,8 +5,7 @@ import styles from './VulnerabilityAssessment.module.css';
 function MainContent() {
   const [clients, setClients] = useState([]); // Store the list of clients
   const [selectedClients, setSelectedClients] = useState([]); // Store selected clients
-  const [logFiles, setLogFiles] = useState([]); // State to store the list of log files
-  const [showLogFiles, setShowLogFiles] = useState(false); // State to toggle log files view
+  const [selectAll, setSelectAll] = useState(false); // Track the "Select All" state
 
   // Fetch the list of clients from the server
   useEffect(() => {
@@ -23,12 +22,29 @@ function MainContent() {
 
   // Handle client checkbox toggle
   const handleClientSelection = (ip) => {
-    if (selectedClients.includes(ip)) {
-      setSelectedClients(selectedClients.filter(client => client !== ip));
-    } else {
-      setSelectedClients([...selectedClients, ip]);
-    }
+    setSelectedClients((prevSelectedClients) =>
+      prevSelectedClients.includes(ip)
+        ? prevSelectedClients.filter(client => client !== ip)
+        : [...prevSelectedClients, ip]
+    );
   };
+
+  // Handle "Select All" checkbox toggle
+  const handleSelectAll = () => {
+    if (selectAll) {
+      // Deselect all clients
+      setSelectedClients([]);
+    } else {
+      // Select all clients
+      setSelectedClients(clients.map(client => client.ip));
+    }
+    setSelectAll(!selectAll);
+  };
+
+  // Sync the "Select All" checkbox with individual selections
+  useEffect(() => {
+    setSelectAll(selectedClients.length === clients.length && clients.length > 0);
+  }, [selectedClients, clients]);
 
   // Function to run vulnerability scan on selected clients
   const runVulnerabilityScan = async () => {
@@ -39,24 +55,12 @@ function MainContent() {
 
     try {
       const response = await axios.post('http://localhost:5000/run-vulnerability-scan', {
-        client_ids: selectedClients // Send selected clients' IPs
+        client_ids: selectedClients, // Send selected clients' IPs
       });
       console.log('Scan results:', response.data);
       alert("Vulnerability scan initiated for selected clients.");
     } catch (error) {
       alert("An error occurred while running the scan.");
-      console.error(error);
-    }
-  };
-
-  // Function to fetch log files from the admin server
-  const fetchLogFiles = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/list-logs');
-      setLogFiles(response.data.logFiles);
-      setShowLogFiles(true);
-    } catch (error) {
-      alert("An error occurred while fetching log files.");
       console.error(error);
     }
   };
@@ -76,7 +80,16 @@ function MainContent() {
         <table className={styles.clientsTable}>
           <thead>
             <tr>
-              <th>Select</th>
+              <th>
+                <label className={styles.circularCheckbox}>
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                  <span>Select All</span>
+                </label>
+              </th>
               <th>IP Address</th>
               <th>Client Name</th>
             </tr>
@@ -109,27 +122,7 @@ function MainContent() {
             Run Vulnerability Assessment Scan
           </span>
         </button>
-
-        <button className={styles.actionButton} onClick={fetchLogFiles}>
-          <span className={styles.actionButtonText}>
-            {showLogFiles ? "Hide Logs" : "View Logs"}
-          </span>
-        </button>
       </div>
-
-      {/* If log files are available, display them */}
-      {showLogFiles && logFiles.length > 0 && (
-        <div className={styles.logFilesContainer}>
-          <h3 className={styles.logTitle}>Available Log Files:</h3>
-          <ul className={styles.logList}>
-            {logFiles.map((file, index) => (
-              <li key={index} className={styles.logItem}>
-                {file}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </section>
   );
 }

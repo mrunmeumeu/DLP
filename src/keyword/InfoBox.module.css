@@ -1,7 +1,7 @@
 .infoBox {
     display: flex;
     margin-top: 25px;
-    width: 100%;
+    width: 90%;
     font: 500 18px Inter, sans-serif;
     border-radius: 12px;
     background-color: #000;
