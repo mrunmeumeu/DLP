@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Edge PDF Password Protector",
+    "version": "1.8",
+  
+    "description": "Protect PDF files with passwords fetched dynamically from a Flask server.",
+    "permissions": [
+      "scripting",
+      "tabs",
+      "storage"
+    ],
+    "host_permissions": [
+      "http://localhost:5001/*",
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {},
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' http://localhost:5001; object-src 'self';"
+    }
+  }
+  
