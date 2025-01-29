@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Manage Sensitive Words</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e6e6e6;
+        }
+        
+        #word-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        
+        #word-list li {
+            background-color: #292b4e;
+            margin: 10px auto;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #word-list li button {
+            background-color: #ff4b5c;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+        
+        #word-list li button:hover {
+            background-color: #e63946;
+        }
+        
+        #new-word {
+            display: block;
+            width: 60%;
+            padding: 10px;
+            margin: 20px auto;
+            border-radius: 10px;
+            border: none;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        #add-word {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: #6a4cff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        #add-word:hover {
+            background-color: #5040b2;
+        }
+        
+        #error-message {
+            color: #ff4b5c;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .container {
+            background: linear-gradient(145deg, #292b4e, #1a1a2e);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+
+        .device-health {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .device-health div {
+            width: 200px;
+            height: 200px;
+            background: #292b4e;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .device-health div:before {
+            content: "50%";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Sensitive Words</h1>
+        <h3>Current Sensitive Words:</h3>
+        <ul id="word-list"></ul>
+
+        <input type="text" id="new-word" placeholder="New sensitive word">
+        <button id="add-word">Add Word</button>
+        <p id="error-message"></p>
+    </div>
+
+    <div class="device-health">
+        <div></div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

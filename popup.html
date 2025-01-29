@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected Admin</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e6e6e6;
+        }
+
+        #login-section, #admin-section {
+            background-color: #292b4e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        #password-input {
+            width: 80%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+
+        #login-button, #open-admin-ui {
+            padding: 12px 20px;
+            margin: 10px 0;
+            width: 80%;
+            background-color: #6a4cff;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #login-button:hover, #open-admin-ui:hover {
+            background-color: #5040b2;
+        }
+
+        #error-message {
+            color: #ff4b5c;
+            font-weight: bold;
+        }
+
+        #admin-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-section">
+        <h1>Enter Admin Password</h1>
+        <input type="password" id="password-input" placeholder="Password">
+        <button id="login-button">Submit</button>
+        <p id="error-message"></p>
+    </div>
+
+    <div id="admin-section">
+        <h1>Admin Panel</h1>
+        <button id="open-admin-ui">Manage Sensitive Words</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
