@@ -1,4 +1,3 @@
-#the file is named as text14.exe as of testing
 import win32clipboard
 import os
 from pathlib import Path
@@ -22,6 +21,15 @@ import firebase_admin
 from firebase_admin import credentials, db
 import json
 import sys
+import socket
+import uuid
+import hashlib
+from datetime import datetime, timedelta
+
+SCRIPT_ID = str(uuid.uuid4())  # Generate a unique identifier for this script instance
+processed_content_hashes = set()
+REPROCESS_THRESHOLD = timedelta(seconds=10)
+
 # Define sensitive keywords
 # cred = credentials.Certificate("C:\\Program Files\\DLP\\clipboard-81621-firebase-adminsdk-rpim7-dd58d299af.json")
 
@@ -61,7 +69,10 @@ initialize_firebase()
 def load_sensitive_keywords():
     if os.path.exists(KEYWORDS_FILE_PATH):
         with open(KEYWORDS_FILE_PATH, 'r', encoding='utf-8') as file:
-            return [line.strip() for line in file if line.strip()]  # Read non-empty lines
+            print(f"Loaded sensitive keywords")
+
+            return [line.strip() for line in file if line.strip()] 
+ # Read non-empty lines
     return []
 
 # Function to save sensitive keywords to a file
@@ -121,31 +132,29 @@ def get_device_username():
         return "Unknown"
 # Function to check if a string contains sensitive keywords
 def contains_sensitive_keywords(text):
+    print(f"Checking content for keywords: {text}")
     for keyword in SENSITIVE_KEYWORDS:
         if re.search(rf'\b{keyword}\b', text, re.IGNORECASE):
-            log_event("Sensitive content detected and clipboard cleared.", detected_word=keyword)
+            print(f"Keyword detected: {keyword}")
+            clear_clipboard()
             return True
     return False
 
+
 # Function to get clipboard content as a file path if files are copied
 def get_clipboard_files():
-    attempts = 0
-    while attempts < 5:
-        try:
-            win32clipboard.OpenClipboard()
-            if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_HDROP):
-                file_paths = win32clipboard.GetClipboardData(win32clipboard.CF_HDROP)
-                return list(file_paths)
-        except Exception as e:
-            print(f"Error accessing clipboard (attempt {attempts + 1}): {e}")
-            attempts += 1
-            time.sleep(1)  # Wait before retrying clipboard access
-        finally:
-            try:
-                win32clipboard.CloseClipboard()
-            except Exception as close_error:
-                print(f"Error closing clipboard: {close_error}")
+    try:
+        win32clipboard.OpenClipboard()
+        if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_HDROP):
+            file_paths = win32clipboard.GetClipboardData(win32clipboard.CF_HDROP)
+            win32clipboard.CloseClipboard()
+            return list(file_paths)  # Return the list of file paths
+        win32clipboard.CloseClipboard()
+    except Exception as e:
+        print(f"Error accessing clipboard for file paths: {e}")
     return None
+
+
 
 # Function to extract zip files
 def extract_zip(file_path, extract_to):
@@ -175,7 +184,7 @@ def read_file_content(file_path):
 # Function to clear the clipboard using pyperclip
 def log_event(event_description, detected_word=None):
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-    username = get_device_username()
+    username = os.getlogin()
     # Create a reference to your logs in the database
     ref = db.reference('logs')
 
@@ -197,18 +206,47 @@ def log_event(event_description, detected_word=None):
     if detected_word:
         print(f"Detected word: {detected_word}")
 
-def clear_clipboard():
+def log_local_clear(file_name):
+    """
+    Log the event of clearing the clipboard locally in clears.txt.
+    """
+    log_file_path = "clears.txt"  # Path to the log file
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    log_entry = f"{timestamp} - Cleared clipboard for file: {file_name}\n"
+    
+    try:
+        with open(log_file_path, "a", encoding="utf-8") as log_file:
+            log_file.write(log_entry)
+        print(f"Logged clear event: {log_entry.strip()}")
+    except Exception as e:
+        print(f"Error logging clear event: {e}")
+
+
+def clear_clipboard(file_name=None, detected_keyword=None):
+    """
+    Clears the clipboard and logs the event to both Firebase and a local file.
+    """
     attempts = 0
     while attempts < 5:
         try:
-            pyperclip.copy('')  # Replace clipboard content with an empty string using pyperclip
+            pyperclip.copy('')  # Clear the clipboard content
             print("Clipboard cleared.")
-            # log_event("Sensitive content detected and clipboard cleared.")
+
+            # Log locally
+            if file_name:
+                log_local_clear(file_name)
+
+            # Log to Firebase using the existing log_event function
+            log_description = f"Cleared clipboard for {file_name or 'Clipboard text'}"
+            log_event(event_description=log_description, detected_word=detected_keyword)
+
             return
         except Exception as e:
             print(f"Error clearing clipboard (attempt {attempts + 1}): {e}")
             attempts += 1
-            time.sleep(1)  # Wait before retrying clipboard access
+            time.sleep(1)  # Wait before retrying
+
+
 
 # Function to scan the contents of extracted files (recursive)
 def scan_extracted_files(extracted_dir):
@@ -235,6 +273,7 @@ def scan_regular_file(file_path):
     # Check if the file name contains sensitive keywords
     if contains_sensitive_keywords(file_name):
         print(f"Sensitive file name detected: {file_name}")
+        clear_clipboard() 
         return True
 
     # Check content based on file extension
@@ -242,24 +281,28 @@ def scan_regular_file(file_path):
         file_content = read_file_content(file_path)
         if file_content and contains_sensitive_keywords(file_content):
             print(f"Sensitive content detected in {file_name}")
+            clear_clipboard() 
             return True
 
     # Check for PDF files
     elif file_path.endswith('.pdf'):
         if scan_pdf_file(file_path):
             print(f"Sensitive content detected in {file_name}")
+            clear_clipboard() 
             return True
 
     # Check for Word files (.docx)
     elif file_path.endswith('.docx'):
         if scan_word_file(file_path):
             print(f"Sensitive content detected in {file_name}")
+            clear_clipboard() 
             return True
 
     # Check for Excel files (.xlsx)
     elif file_path.endswith('.xlsx'):
         if scan_excel_file(file_path):
             print(f"Sensitive content detected in {file_name}")
+            clear_clipboard() 
             return True
 
     # Handle nested compressed files (zip or tar)
@@ -272,6 +315,7 @@ def scan_regular_file(file_path):
                 extract_tar(file_path, temp_dir)
             # Recursively scan the extracted files
             if scan_extracted_files(temp_dir):
+                clear_clipboard() 
                 return True
 
     return False
@@ -316,27 +360,220 @@ def scan_excel_file(file_path):
         print(f"Error reading Excel file {file_path}: {e}")
     return False
 
-# Main function to monitor clipboard and scan files (regular or compressed)
-def monitor_clipboard():
-    last_clipboard_content = None
+
+def update_clipboard_in_firebase(content, source):
+    username = os.getlogin()
+    ref = db.reference(f"/clipboard/{username}")  # Reference the user's clipboard node
+    
+    # Prepare the data
+    data = {
+        "content": content,
+        "last_updated": time.strftime('%Y-%m-%d %H:%M:%S'),
+        "source": source
+    }
+    
+    ref.set(data)  # Replace the existing log
+    print(f"Clipboard updated in Firebase under {username}: {content}")
+
+
+
+
+# Get clipboard data from Firebase
+def get_clipboard_from_firebase():
+    ref = db.reference("/clipboard")
+    return ref.get()
+
+
+def scan_zip_file(file_path):
+    """
+    Scans a zip file by extracting its contents and checking each file for sensitive keywords.
+    """
+    try:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+                print(f"Extracted contents of {file_path} to {temp_dir}")
+            
+            # Scan all extracted files
+            for root, _, files in os.walk(temp_dir):
+                for file in files:
+                    extracted_file_path = os.path.join(root, file)
+                    if scan_regular_file(extracted_file_path):
+                        return True  # Stop scanning as soon as sensitive content is found
+    except Exception as e:
+        print(f"Error scanning zip file {file_path}: {e}")
+    return False
+
+processed_content = {}
+
+
+def hash_content(content):
+    """
+    Create a hash of the given content for efficient tracking.
+    """
+    return hashlib.md5(content.encode('utf-8')).hexdigest()
+
+
+def should_reprocess(file_hash, last_clipboard_time):
+    """
+    Determines whether the file should be reprocessed based on the time elapsed
+    since it was last processed and the clipboard content refresh time.
+    """
+    now = datetime.now()
+
+    # If the file hash is new or it's been re-copied recently, reprocess it
+    if file_hash not in processed_content:
+        return True
+
+    last_processed_time = processed_content[file_hash]
+    
+    # If the clipboard content has been updated since the last processing
+    if last_clipboard_time and last_clipboard_time > last_processed_time:
+        return True
+
+    # If enough time has passed, reprocess the file
+    if now - last_processed_time > REPROCESS_THRESHOLD:
+        return True
+
+    return False
+
+
+def update_processed_content(file_hash):
+    """
+    Updates the timestamp for a processed file hash.
+    """
+    processed_content[file_hash] = datetime.now()
+
+
+file_last_copied = {}  # Store the last copied time for each file
+REPROCESS_DELAY = 1  # Minimum time (in seconds) between reprocessing the same file
+
+def monitor_clipboard(source):
+    """
+    Monitors clipboard and checks file contents for sensitive keywords.
+    """
+    global file_last_copied
+
+    last_clipboard_content = None  # Track the last content sent to Firebase
 
     while True:
-        check_for_keywords_update() 
         clipboard_files = get_clipboard_files()
+        new_content = None
+        current_time = datetime.now()
 
-        if clipboard_files and clipboard_files != last_clipboard_content:
+        # Process files in the clipboard
+        if clipboard_files:
             for file_path in clipboard_files:
                 file_name = Path(file_path).name
 
-                # If it's a regular file or compressed archive, scan it
-                if scan_regular_file(file_path):
-                    print(f"Sensitive content found in {file_name}. Clearing clipboard.")
-                    clear_clipboard()
+                # Check if the file was recently copied
+                if file_name in file_last_copied:
+                    last_copied_time = file_last_copied[file_name]
+                    if (current_time - last_copied_time).total_seconds() < REPROCESS_DELAY:
+                        continue  # Skip if the file was copied too recently
+
+                # Update the last copied time for the file
+                file_last_copied[file_name] = current_time
+
+                # Process the file
+                if file_path.endswith(".txt"):
+                    try:
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            content = f.read()
+                        if contains_sensitive_keywords(content):
+                            clear_clipboard(file_name)
+                            new_content = f"Sensitive content detected in {file_name}"
+                    except Exception as e:
+                        print(f"Error reading file {file_path}: {e}")
+                elif file_path.endswith(".pdf"):
+                    if scan_pdf_file(file_path):
+                        clear_clipboard(file_name)
+                        new_content = f"Sensitive content detected in PDF: {file_name}"
+                elif file_path.endswith(".docx"):
+                    if scan_word_file(file_path):
+                        clear_clipboard(file_name)
+                        new_content = f"Sensitive content detected in Word file: {file_name}"
+                elif file_path.endswith(".xlsx"):
+                    if scan_excel_file(file_path):
+                        clear_clipboard(file_name)
+                        new_content = f"Sensitive content detected in Excel file: {file_name}"
+                elif file_path.endswith(".zip"):
+                    if scan_zip_file(file_path):
+                        clear_clipboard(file_name)
+                        new_content = f"Sensitive content detected in zip: {file_name}"
+
+                # Break if sensitive content is detected
+                if new_content:
                     break
 
-            last_clipboard_content = clipboard_files
+        # Check for plain text in the clipboard if no file is processed
+        if not new_content:
+            clipboard_content = pyperclip.paste()
 
-        time.sleep(1)
+            if clipboard_content and clipboard_content != last_clipboard_content:
+                if contains_sensitive_keywords(clipboard_content):
+                    clear_clipboard("Clipboard text")
+                    new_content = "Sensitive content detected in clipboard text"
+                    last_clipboard_content = clipboard_content
+
+        # Update Firebase only if new content is detected
+        if new_content:
+            print(f"Updating Firebase with new content: {new_content[:50]}...")
+            update_clipboard_in_firebase(new_content, source)
+
+        time.sleep(1)  # Avoid excessive CPU usage
+  # Avoid excessive CPU usage
+
+
+
+def clipboard_listener(event):
+    # Get the current username
+    username = os.getlogin()
+
+    # Print the full event to understand its structure
+    print(f"Received Firebase event: {event}")
+    
+    # Fetch the data from the event
+    data = event.data  # This contains the actual data of the event
+    
+    # Check if the event data is valid and contains clipboard content
+    if data and "content" in data:
+        content = data["content"]
+        print(f"Log from {username}: {content}")
+
+        # Check content for sensitive keywords
+        for keyword in SENSITIVE_KEYWORDS:
+            if re.search(rf'\b{keyword}\b', content, re.IGNORECASE):
+                log_event(f"Sensitive content detected: {keyword}")
+                print(f"Sensitive keyword found: {keyword}")
+                
+                # Log the detected sensitive keyword to Firebase
+                ref = db.reference(f"/clipboard/{username}")
+                ref.set({"sensitive_keyword": keyword})  # Store only the sensitive keyword
+                print(f"Log updated with sensitive keyword for {username}.")
+                clear_clipboard()
+                # Clear the log after storing the keyword
+                time.sleep(1)  # Optional: Small delay for visibility before clearing
+                ref.delete()  # Deletes the log entry for the user
+                print(f"Log cleared for {username} due to sensitive keyword.")
+                break
+    else:
+        print("No relevant content in this event.")
+
+
+
+
+
+
+
+def start_firebase_listener():
+    username = os.getlogin()  # Get the username of the current user
+    computer_name = socket.gethostname()  # Use computer name as the node
+
+    # Reference the user's clipboard logs in Firebase
+    ref = db.reference(f"/clipboard/{username}")
+    ref.listen(clipboard_listener)  # Listen for updates
+
 
 # Function to create a tray icon
 def create_tray_icon():
@@ -438,14 +675,14 @@ def admin_gui():
     tk.Button(admin_window, text="Clear All Keywords", command=clear_keywords).pack(pady=5)
     tk.Button(admin_window, text="Apply and Close", command=apply_changes).pack(pady=10)
 
-if __name__ == "__main__":
-    # Start the keywords file watcher
+def main():
     observer = start_keywords_file_watcher()
 
     # Start clipboard monitor in a background thread
-    monitor_thread = threading.Thread(target=monitor_clipboard, daemon=True)
+    monitor_thread = threading.Thread(target=monitor_clipboard, args=("script1",), daemon=True)
     monitor_thread.start()
-
+    listener_thread = threading.Thread(target=start_firebase_listener, daemon=True)
+    listener_thread.start()
     # Start tray icon in a separate thread
     tray_thread = threading.Thread(target=create_tray_icon, daemon=True)
     tray_thread.start()
@@ -457,3 +694,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
+if __name__ == "__main__":
+    # Start the keywords file watcher
+    main()
